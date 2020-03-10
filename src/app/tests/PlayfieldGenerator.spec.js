@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import './setupTests';
 
+import {Playfield} from '../components/Playfield';
 import PlayfieldGenerator from '../components/PlayfieldGenerator';
 
 let generator;
@@ -16,3 +17,12 @@ describe('Matrix generator', () => {
         console.log(game);
     });
 });
+
+describe('UI Test Suite', () => {
+    it('renders without crashing', () => {
+        generator = new PlayfieldGenerator()
+        generator.init()
+        shallow(<Playfield matrix={generator.restart()} />);
+    });
+});
+    
