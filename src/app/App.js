@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import {Playfield} from './components/Playfield'
+import PlayfieldGenerator from './components/PlayfieldGenerator'
+
 
 export default class App extends Component {
+
+    
     constructor(props) {
         super(props);
-        this.state = {message: 'Hello ReactJS'}
+        this.generator = new PlayfieldGenerator()
+        this.generator.init()
     }
 
     componentDidMount() {
@@ -11,9 +17,11 @@ export default class App extends Component {
     }
 
     render() {
-        return (<div>
-         <h1>{this.state.message}</h1>
-        </div>
+
+        return (
+            <div>
+                <Playfield onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()} />
+            </div>
         );
     }
 }
