@@ -39,7 +39,8 @@ export class Playfield extends Component {
                     filter: colors.baseFilter + ' ' + colors.colors[colors.numberColors[number_value - 1]]
                 }
                 const field =
-                    <NumberTile key={i} style={style} id={i} val={number_value}></NumberTile>
+                    <div data-key={i} data-value={number_value} key={i} style={style} className="f image" onClick={this.clickHandler(i, number_value)}></div>
+
                 numberRow.push(field);
                 i++;
             });

@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 
-function NumberTile(props) {
-    let [className, setClassName] = useState('f image');
 
-    return <div
-        data-key={props.id}
-        style={props.style}
-        data-value={props.val}
-        className={className}
-    ></div>
+export class NumberTile extends Component {
+
+    render() {
+        return null
+    }
 }
-
-export default NumberTile;
