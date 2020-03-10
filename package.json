@@ -1,0 +1,43 @@
+{
+  "name": "react-webpack-babel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app/index.html",
+  "scripts": {
+    "start": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "dev-server": "webpack-dev-server",
+    "test": "jest --config ./jest-config.json",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/raphael-brand/react-webpack-babel.git"
+  },
+  "keywords": [],
+  "author": "Raphael Brand <info@raphaelbrand.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raphael-brand/react-webpack-babel/issues"
+  },
+  "homepage": "https://github.com/raphael-brand/react-webpack-babel#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/preset-env": "^7.8.6",
+    "@babel/preset-react": "^7.8.3",
+    "@testing-library/react": "^9.5.0",
+    "axios": "^0.19.2",
+    "babel-loader": "^8.0.6",
+    "jest": "^25.1.0",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-test-renderer": "^16.13.0"
+  }
+}
