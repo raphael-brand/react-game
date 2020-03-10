@@ -1,0 +1,84 @@
+*
+    padding: 0
+    margin: 0
+@import url('https://fonts.googleapis.com/css?family=Ultra&display=swap')
+
+body #app
+    background-color: lightgray
+
+$border-radius: 14px
+$gray: slategray
+$border-style: 1px solid $gray
+$matrix: 3
+$tile-size: (100vw / $matrix) * .50
+
+// calculate the playfield tiles width by amount
+// :root
+// --matrix: #{matrix}
+// --tile-size: calc( ( 100vw / var(#{matrix}) ) * .50 )
+
+pre
+    background-color: #F1F8FF
+    display: block
+    width: 60px
+    padding: 3px
+    border: 1px solid maroon
+
+.sumfield
+    position: absolute
+    display: inline
+    font-size: 10rem
+    margin-right: 2vw
+    right: 2vw
+
+.game, .sumfield
+    font-family: 'Ultra', serif
+
+.game > div
+    border-width: 3px
+
+.game > div, .row > div
+    border-radius: 14px
+
+.game > .wrap
+    display: grid
+    width: max-content
+
+.row > div
+    border: $border-style
+    background-color: $gray
+    float: left
+    font-size: 2.5em
+    display: block
+    width: $tile-size
+    height: $tile-size
+    line-height: $tile-size
+    text-align: center
+    cursor: pointer
+
+.image
+    background-image: url(../img/spritesheet_padding_2px.png)
+    background-repeat: no-repeat
+    background-size: cover
+    filter: invert(100%) sepia(100%) saturate(100%) brightness(100%) contrast(100%)
+//    animation: count 10s steps(10) infinite
+
+.clicked
+    opacity: 0.3
+.played
+    opacity: 0
+    cursor: default !important
+
+#countdown
+    position: absolute
+    display: inline
+    font-size: 10rem
+    margin-right: 2vw
+    right: 2vw
+    top: 1.3em
+
+@keyframes count
+    from
+        background-position: 0 0
+    to
+        background-position: -166vw 0
