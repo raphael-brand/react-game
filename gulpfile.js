@@ -5,7 +5,7 @@ gulp.task('sass', function () {
   return gulp.src([
     './src/app/sass/*.sass'])
     .pipe(sass()).on('error', sass.logError)
-    .pipe(gulp.dest('./public'))
+    .pipe(gulp.dest('./public/'))
 });
 
 gulp.task('watch', gulp.series(function() {    
