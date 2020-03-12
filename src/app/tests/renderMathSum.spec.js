@@ -9,5 +9,6 @@ describe('math sum field generate', () => {
         let generator = new PlayfieldGenerator();
         generator.init()
         let renderer = new MathSumRenderer({matrix: generator.restart()});
+        console.log(renderer)
     });
 });
