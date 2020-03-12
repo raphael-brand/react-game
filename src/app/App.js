@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PlayfieldView } from './components/PlayfieldView'
-import PlayfieldGenerator from './components/PlayfieldGenerator'
+import PlayfieldGenerator from './components/PlayfieldGenerator';
+import { Sumfield } from './components/Sumfield'
 
 
 export default class App extends Component {
@@ -20,7 +21,9 @@ export default class App extends Component {
 
         return (
             <div>
-                <PlayfieldView onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()} />
+                <PlayfieldView onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()}>
+                    <Sumfield></Sumfield>
+                </PlayfieldView>
             </div>
         );
     }
