@@ -13,6 +13,13 @@ function MathSumRenderer(props) {
 
     function pickRandomField(notGreaterThan) {
         // code here
+        //console.log(matrix)
+        matrix.forEach((value) => {
+            let row = value;
+            row.forEach(item => {
+                console.log(item)
+            });
+        });
     }
 
     function createFromPlayfieldValues() {

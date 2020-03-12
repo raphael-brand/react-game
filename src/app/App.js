@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PlayfieldView } from './components/PlayfieldView'
+import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { Sumfield } from './components/Sumfield'
 
@@ -11,6 +12,8 @@ export default class App extends Component {
         super(props);
         this.generator = new PlayfieldGenerator()
         this.generator.init()
+        let renderer = new MathSumRenderer({matrix: this.generator.restart()});
+        console.log('renderer', renderer)
     }
 
     componentDidMount() {
