@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Playfield} from './components/Playfield'
+import { PlayfieldView } from './components/PlayfieldView'
 import PlayfieldGenerator from './components/PlayfieldGenerator'
 
 
@@ -20,7 +20,7 @@ export default class App extends Component {
 
         return (
             <div>
-                <Playfield onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()} />
+                <PlayfieldView onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()} />
             </div>
         );
     }

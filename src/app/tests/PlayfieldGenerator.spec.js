@@ -1,8 +1,8 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import './setupTests';
 
-import {Playfield} from '../components/Playfield';
+import { PlayfieldView } from '../components/PlayfieldView';
 import PlayfieldGenerator from '../components/PlayfieldGenerator';
 
 let generator;
@@ -22,7 +22,7 @@ describe('UI Test Suite', () => {
     it('renders without crashing', () => {
         generator = new PlayfieldGenerator()
         generator.init()
-        shallow(<Playfield matrix={generator.restart()} />);
+        shallow(<PlayfieldView matrix={generator.restart()} />);
     });
 });
     
