@@ -12,13 +12,20 @@ export class Sumfield extends Component {
     }
 
 
-    render() {
+    /*render() {
         this.result = this.random(this.props.value ? this.props.value : this.state.sum)
         //        console.log('not solved', JSON.stringify(this.not_solved))
         //        console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
         return <div className="sumfield">{this.result.sum}</div>
-    }
+    }*/
 
+    render() {
+        this.result = {
+            sum: this.props.value ? this.props.value : this.state.sum
+        }
+
+        return <div className="sumfield">{this.result.sum}</div>
+    }
     random(val) {
 
         const notSolved = document.querySelectorAll('.image:not(.played):not(.clicked)');
