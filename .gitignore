@@ -2,3 +2,6 @@ node_modules/
 public/
 package-lock.json
 npm-*
+codealike.json
+.vscode/launch.json
+.gitignore
