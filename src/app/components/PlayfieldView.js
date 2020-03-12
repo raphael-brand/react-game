@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { style } from './../assets';
-export class Playfield extends Component {
+import { style } from '../assets';
+export class PlayfieldView extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ export class Playfield extends Component {
         return (e) => {
             if (e.target.classList.toString().indexOf('played') > -1) return;
             this.props.onClick(number, index, e.target);
-            // console.log('key:', index, 'number:', number)
+            console.log('key:', index, 'number:', number)
         }
     }
 
