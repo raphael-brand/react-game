@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { PlayfieldView } from './components/PlayfieldView'
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
+import { PlayfieldView } from './components/PlayfieldView'
 import { Sumfield } from './components/Sumfield'
 
 
@@ -10,10 +10,17 @@ export default class App extends Component {
     
     constructor(props) {
         super(props);
+        this.state = {value: 0};
         this.generator = new PlayfieldGenerator()
         this.generator.init()
-        let renderer = new MathSumRenderer({matrix: this.generator.restart()});
-        console.log('renderer', renderer)
+        this.renderer = new MathSumRenderer({matrix: this.generator.restart()});
+        console.log('renderer', this.renderer);
+        this.updateTask = this.updateTask.bind(this);
+        this.renderer.init();
+    }
+
+    updateTask() {
+        this.setState({value: this.renderer.update()});
     }
 
     componentDidMount() {
@@ -24,8 +31,8 @@ export default class App extends Component {
 
         return (
             <div>
-                <PlayfieldView onClick={() => /* no click-handler yet */ false} matrix={this.generator.restart()}>
-                    <Sumfield></Sumfield>
+                <PlayfieldView onClick={this.updateTask} matrix={this.generator.restart()}>
+                    <Sumfield value={this.state.value}></Sumfield>
                 </PlayfieldView>
             </div>
         );
