@@ -87,6 +87,12 @@ function PlayfieldGenerator () {
     this.simple = () => {
         return flatArray;
     }
+
+    this.getFieldByIndex = (val) => {
+        return flatArray.filter(cb => {
+            return cb.key === val;
+        })
+    }
     
     this.simpleByValue = (val) => {
         let result = flatArray.filter(cb => {
