@@ -16,16 +16,28 @@ function MathSumRenderer(props) {
         return pickRandomField();
     }
 
-    function pickRandomField(notGreaterThan) {
+    function pickRandomField() {
 
         let result = 0;
-        matrix.forEach((value) => {
-            let row = value;
-            row.forEach(item => {
-                result = item;
-            });
+        let sortedFlatArray = matrix.flat().sort();
+        console.log(sortedFlatArray)
+        let lastIndex = sortedFlatArray.length-1;
+
+        console.log(sortedFlatArray);
+
+        let randomValues = [];
+
+        for(let i=min_tries; i<max_tries;i++) {
+            const randomIndex = Math.floor(lastIndex*Math.random());
+            console.log('randomIndex', randomIndex)
+            randomValues.push(sortedFlatArray[randomIndex]);
+        }
+        console.log(randomValues);
+
+        randomValues.forEach((value) => {
+            result += value;
         });
-        return result;
+        return parseInt(result);
     }
 
     function createFromPlayfieldValues() {

@@ -22,6 +22,7 @@ describe('UI Test Suite', () => {
     it('renders without crashing', () => {
         generator = new PlayfieldGenerator()
         generator.init()
+        generator.getFieldByIndex(2);
         shallow(<PlayfieldView matrix={generator.restart()} />);
     });
 });

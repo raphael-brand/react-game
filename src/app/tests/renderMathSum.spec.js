@@ -16,11 +16,11 @@ describe('math sum field generate', () => {
 
     describe('math sum renderer', () => {
 
-        it('calls the update function', () => {
+        it('calls the init function', () => {
             console.log(renderer.init());
         });
         
-        it('calls the init function', () => {
+        it('calls the update function', () => {
             console.log(renderer.update());
         });
 
@@ -38,6 +38,10 @@ describe('math sum field generate', () => {
             filtered.forEach(element => {
                 console.log(`key: ${element.key}`, `value: ${element.value}`);
             });
+        });
+
+        it('returns a value from the simple map', () => {
+            console.log(generator.getFieldByIndex(2));
         })
 
     });    

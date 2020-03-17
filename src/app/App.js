@@ -14,20 +14,22 @@ export default class App extends Component {
         this.generator = new PlayfieldGenerator()
         this.generator.init()
 
+        const playfield = this.generator.restart();
+        this.renderer = new MathSumRenderer({ matrix: playfield });
+
         this.state = {
-            value: 20,
-            playfield: this.generator.restart()
+            value: this.renderer.init(),
+            playfield: playfield
         };
 
-        this.remainingTiles = this.state.playfield.map(this.isSolved).length;
-        this.renderer = new MathSumRenderer({ matrix: this.state.playfield });
-        this.renderer.init();
+        this.remainingTiles = this.state.playfield.filter(this.isSolved).length;
+        
 
         this.updateTask = this.updateTask.bind(this);
     }
 
-    isSolved(value, index, map) {
-        console.log(map);
+    isSolved(index, value, map) {
+        //console.log(map);
         return value > 0;
     }
 
