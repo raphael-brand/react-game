@@ -1,6 +1,6 @@
 function MathSumRenderer(props) {
     const min_tries = 1;
-    const max_tries = 3;
+    const max_tries = 4;
 
     let matrix;
     let startValue;
