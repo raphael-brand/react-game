@@ -20,9 +20,8 @@ function MathSumRenderer(props) {
 
         let result = 0;
         console.log(matrix);
-        //const data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-
         const flatMap = () => {
+            // thanks to Vladimir Efanov
             return matrix.reduce((total, amount) => {
                 return total.concat(amount);
             }, []);
