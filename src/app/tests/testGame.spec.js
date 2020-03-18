@@ -7,7 +7,7 @@ import MathSumRenderer from './../actions/renderMathSum'
 import { PlayfieldView } from './../components/PlayfieldView'
 import { Sumfield } from './../components/Sumfield';
 
-describe('playfield is playable', () => {
+describe('playfield interactions', () => {
     const generator = new PlayfieldGenerator();
     generator.init();
     const matrix = generator.restart();
@@ -15,7 +15,7 @@ describe('playfield is playable', () => {
     const startValue = renderer.init()
     let app;
 
-    describe('creates the playfield', () => {
+    describe('it can create the app components', () => {
 
         app = mount(<PlayfieldView matrix={matrix}>
             <Sumfield value={startValue}></Sumfield>
@@ -25,7 +25,22 @@ describe('playfield is playable', () => {
             expect(parseInt(
                 app.find('.sumfield').text())
             ).toBe(startValue);
-        })
+        });
+
+        describe('click number buttons', () => {
+
+            it('has a button which value is lower or equal to the task value', () => {
+
+            });
+
+            it('can be clicked', () => {
+
+            });
+
+            it('substracts it\'s value from the task', () => {
+                
+            });
+        });
 
     });
 
