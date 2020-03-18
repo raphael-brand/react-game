@@ -66,7 +66,7 @@ function PlayfieldGenerator () {
                     continue;
                 }
 
-                flatArray.push({key: flatArray.length, value: val});
+                flatArray.push({key: flatArray.length, value: val, played: false, clicked: false });
                 arr.push(val);
             }
         }
