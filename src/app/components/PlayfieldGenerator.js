@@ -10,7 +10,7 @@ function PlayfieldGenerator () {
     let setPlayfieldMatrix;
     let matrixSize;
     let playfieldMatrix;
-
+    let flatArray = [];
     let arr = [];
 
     this.init = function() {
@@ -24,13 +24,28 @@ function PlayfieldGenerator () {
         matrixSize = size;
     }
 
+    // https://stackoverflow.com/a/59423114
+    function sortByProperty(array,property,order="ASC") {
+        return array.sort((a,b) => order === "ASC" ?
+          a[property] > b[property] ? 1 : a[property] < b[property] ? -1 : 0
+        : a[property] > b[property] ? -1 : a[property] < b[property] ? 1 : 0
+        );
+    }
 
     function generate(_matrixSize) {
         matrixSize = _matrixSize;
         playfieldMatrix = [];
+        // init single dimension array version
+        flatArray = [];
+        
         for (let i = 0; i < _matrixSize; i++) {
             playfieldMatrix.push(initPlayfieldColumns());
         }
+
+
+
+        sortByProperty(flatArray, "value", "DESC");
+
         return playfieldMatrix;
     }
 
@@ -51,6 +66,7 @@ function PlayfieldGenerator () {
                     continue;
                 }
 
+                flatArray.push({key: flatArray.length, value: val});
                 arr.push(val);
             }
         }
@@ -68,6 +84,24 @@ function PlayfieldGenerator () {
         return newGame()
     }
 
+    this.simple = () => {
+        return flatArray;
+    }
+
+    this.getFieldByIndex = (val) => {
+        return flatArray.filter(cb => {
+            return cb.key === val;
+        })
+    }
+    
+    this.simpleByValue = (val) => {
+        let result = flatArray.filter(cb => {
+            return cb.value === val
+        });
+
+        result = sortByProperty(result, 'key', "ASC");
+        return result;
+    }
 }
 
 export default PlayfieldGenerator;
