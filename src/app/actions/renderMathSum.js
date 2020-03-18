@@ -19,11 +19,17 @@ function MathSumRenderer(props) {
     function pickRandomField() {
 
         let result = 0;
-        let sortedFlatArray = matrix.flat().sort();
-        console.log(sortedFlatArray)
-        let lastIndex = sortedFlatArray.length-1;
+        console.log(matrix);
+        //const data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
 
-        console.log(sortedFlatArray);
+        const flatMap = () => {
+            return matrix.reduce((total, amount) => {
+                return total.concat(amount);
+            }, []);
+        }
+
+        let sortedFlatArray = flatMap().sort();
+        let lastIndex = sortedFlatArray.length-1;
 
         let randomValues = [];
 
@@ -32,7 +38,6 @@ function MathSumRenderer(props) {
             console.log('randomIndex', randomIndex)
             randomValues.push(sortedFlatArray[randomIndex]);
         }
-        console.log(randomValues);
 
         randomValues.forEach((value) => {
             result += value;
