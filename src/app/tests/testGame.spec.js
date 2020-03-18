@@ -34,6 +34,7 @@ describe('playfield interactions', () => {
             it('has a button which value is equal to the task value', () => {
                 if(matchIDs.length > 0) {
                     expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]').props()).toHaveProperty('data-testid', matchIDs[0].key)
+                    expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]')).toBe(startValue)
                 }                    
             });
             
