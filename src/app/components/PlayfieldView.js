@@ -38,7 +38,7 @@ export class PlayfieldView extends Component {
                     filter: colors.baseFilter + ' ' + colors.colors[colors.numberColors[number_value - 1]]
                 }
                 const field =
-                    <div key={i} data-testid style={style} className="f image" onClick={this.clickHandler(i, number_value)}></div>
+                    <div key={i} data-testid={i} style={style} className="f image" onClick={this.clickHandler(i, number_value)}></div>
 
                 numberRow.push(field);
                 i++;
