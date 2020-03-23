@@ -7,13 +7,14 @@ import MathSumRenderer from './../actions/renderMathSum'
 
 describe('math sum field generate', () => {
 
-    let generator = new PlayfieldGenerator();
-    let renderer = new MathSumRenderer({matrix: generator.restart()});
     let playfield;
+    let generator = new PlayfieldGenerator();
 
     it('calls the generator init function', () => {
         playfield = generator.init()
     });
+
+    let renderer = new MathSumRenderer({matrix: generator.restart(5)});
 
     describe('math sum renderer', () => {
 
