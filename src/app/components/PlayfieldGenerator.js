@@ -66,7 +66,7 @@ function PlayfieldGenerator () {
                     continue;
                 }
 
-                flatArray.push({key: flatArray.length, value: val});
+                flatArray.push({key: flatArray.length, value: val, played: false, clicked: false });
                 arr.push(val);
             }
         }
@@ -80,7 +80,8 @@ function PlayfieldGenerator () {
     }
 
     this.restart = (size) => {
-        if(size) matrixSize = size; 
+        if(!size) return playfieldMatrix;
+        else matrixSize = size;
         return newGame()
     }
 

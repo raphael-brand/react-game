@@ -1,6 +1,6 @@
 function MathSumRenderer(props) {
     const min_tries = 1;
-    const max_tries = 3;
+    const max_tries = 4;
 
     let matrix;
     let startValue;
@@ -19,11 +19,16 @@ function MathSumRenderer(props) {
     function pickRandomField() {
 
         let result = 0;
-        let sortedFlatArray = matrix.flat().sort();
-        console.log(sortedFlatArray)
-        let lastIndex = sortedFlatArray.length-1;
+        console.log(matrix);
+        const flatMap = () => {
+            // thanks to Vladimir Efanov
+            return matrix.reduce((total, amount) => {
+                return total.concat(amount);
+            }, []);
+        }
 
-        console.log(sortedFlatArray);
+        let sortedFlatArray = flatMap().sort();
+        let lastIndex = sortedFlatArray.length-1;
 
         let randomValues = [];
 
@@ -32,7 +37,6 @@ function MathSumRenderer(props) {
             console.log('randomIndex', randomIndex)
             randomValues.push(sortedFlatArray[randomIndex]);
         }
-        console.log(randomValues);
 
         randomValues.forEach((value) => {
             result += value;

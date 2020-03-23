@@ -12,34 +12,47 @@ describe('playfield interactions', () => {
     generator.init();
     const matrix = generator.restart();
     const renderer = new MathSumRenderer({matrix: matrix});
-    const startValue = renderer.init()
-    let app;
+    const startValue = renderer.update();
+    let wrapper;
 
     describe('it can create the app components', () => {
 
-        app = mount(<PlayfieldView matrix={matrix}>
+        wrapper = mount(<PlayfieldView matrix={matrix}>
             <Sumfield value={startValue}></Sumfield>
         </PlayfieldView>)
 
         it('has a task created', () => {
             expect(parseInt(
-                app.find('.sumfield').text())
+                wrapper.find('.sumfield').text())
             ).toBe(startValue);
         });
 
-        describe('click number buttons', () => {
+        let matchIDs = generator.simpleByValue(startValue);
+        
+        describe('exact match found', () => {
 
-            it('has a button which value is lower or equal to the task value', () => {
-
+            it('has a button which value is equal or less than the task value', () => {
+                if(matchIDs.length >= 1) {
+                    expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]')).toBeLessThanOrEqual(startValue);
+                } 
             });
-
             it('can be clicked', () => {
-
+                if(matchIDs.length >= 1)
+                    wrapper.find('div[testid="'+matchIDs[0].key+'"]')
+                    .simulate('click');
+                else if(matchIDs.length == 0) {
+                    console.info('no exact match found')
+                }
             });
+            
 
             it('substracts it\'s value from the task', () => {
                 
             });
+        });
+
+        describe('no exact match found', () => {
+
         });
 
     });

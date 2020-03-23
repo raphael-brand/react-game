@@ -22,15 +22,14 @@ export default class App extends Component {
             playfield: playfield
         };
 
-        this.remainingTiles = this.state.playfield.filter(this.isSolved).length;
+        this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         
 
         this.updateTask = this.updateTask.bind(this);
     }
 
-    isSolved(index, value, map) {
-        //console.log(map);
-        return value > 0;
+    isNotSolved(field) {
+        return field.clicked !== true;
     }
 
     newTask() {
@@ -39,38 +38,28 @@ export default class App extends Component {
 
     updateTask(number, index, obj) {
 
+
         console.log('key:', index, 'number:', number)
-        if (this.state.value < number && obj.getAttribute('class').indexOf('clicked') == -1) return;
+        if (this.state.value < number || this.remainingTiles[index].clicked) return;
 
-        console.log('remainingTiles: ', this.remainingTiles, 'sum: ', this.state.value)
+        console.log(
+            'remainingTiles amount: ', this.generator.simple().filter(this.isNotSolved).length,
+            'sum: ', this.state.value
+        )
 
-        if (obj.getAttribute('class').indexOf('clicked') > -1) {
-
+        if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
-            this.remainingTiles++;
-            obj.classList.remove('clicked');
-            return;
         }
-
+        else
         if (this.state.value - number > 0) {
-            this.setState({ value: this.state.value - number })
-        } else if (this.state.value - number === 0 && this.remainingTiles > 1) {
-            //this.createNumber(number);
-
+            this.setState({ value: this.state.value - number });
             
-                document.querySelectorAll('.clicked').forEach(el => {
-                    el.classList.add('played');
-                });
-                obj.classList.add('played');
-            
-
-            this.remainingTiles--;
-            return;
+        } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
+            this.newTask();
         }
         else return;
 
-        this.remainingTiles--;
-
+        this.remainingTiles[index].clicked = (!this.remainingTiles[index].clicked);
         obj.classList.add('clicked');
 
     }
