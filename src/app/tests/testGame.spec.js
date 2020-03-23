@@ -31,21 +31,20 @@ describe('playfield interactions', () => {
         
         describe('exact match found', () => {
 
-            it('has a button which value is equal to the task value', () => {
-                if(matchIDs.length > 0) {
-                    expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]').props()).toHaveProperty('data-testid', matchIDs[0].key)
-                    expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]')).toBe(startValue)
-                }                    
+            it('has a button which value is equal or less than the task value', () => {
+                if(matchIDs.length >= 1) {
+                    expect(wrapper.find('div[data-testid="'+matchIDs[0].key+'"]')).toBeLessThanOrEqual(startValue);
+                } 
             });
-            
             it('can be clicked', () => {
-                if(matchIDs.length > 0)
+                if(matchIDs.length >= 1)
                     wrapper.find('div[testid="'+matchIDs[0].key+'"]')
                     .simulate('click');
                 else if(matchIDs.length == 0) {
                     console.info('no exact match found')
                 }
             });
+            
 
             it('substracts it\'s value from the task', () => {
                 
