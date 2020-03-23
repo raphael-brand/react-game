@@ -80,9 +80,8 @@ function PlayfieldGenerator () {
     }
 
     this.restart = (size) => {
-        if(size) matrixSize = size;
-        if(!size)
-            return playfieldMatrix; 
+        if(!size) return playfieldMatrix;
+        else matrixSize = size;
         return newGame()
     }
 
