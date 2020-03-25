@@ -10,6 +10,7 @@ export default class App extends Component {
     
     constructor(props) {
         super(props);
+        this.countRenderUpdates = 0;
         this.state = {value: 0};
         this.generator = new PlayfieldGenerator()
         this.generator.init()
@@ -95,6 +96,11 @@ export default class App extends Component {
 
     componentDidMount() {
         console.log('... it worked so far. Sneaking onto the stage now.')
+    }
+
+    componentDidUpdate() {
+        this.countRenderUpdates++;
+        console.log(`DOM updated (${this.countRenderUpdates} times)`)
     }
 
     render() {
