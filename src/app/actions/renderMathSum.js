@@ -43,12 +43,12 @@ function MathSumRenderer(props) {
         for(let i=min_tries; i<max_tries;i++) {
             const randomIndex = Math.floor(lastIndex*Math.random());
 
-            if(sortedFlatArray[randomIndex].clicked == true) {
+            if(sortedFlatArray[randomIndex].clicked == true || sortedFlatArray[randomIndex].played == true) {
                 i -= 1;
                 continue;
             }
 
-            if(new RegExp(/(randomIndex)/g).test(JSON.stringify(randomKeys.values()))) {
+            if(new RegExp(/(:randomIndex)/g).test(JSON.stringify(randomKeys.values()))) {
                 i -= 1;
                 continue
             }
