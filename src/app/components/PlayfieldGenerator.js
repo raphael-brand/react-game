@@ -91,7 +91,7 @@ function PlayfieldGenerator () {
 
     this.getFieldByIndex = (val) => {
         return flatArray.filter(cb => {
-            return cb.key === val;
+            return cb.key == val;
         })
     }
     
