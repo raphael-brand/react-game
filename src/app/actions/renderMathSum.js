@@ -48,7 +48,7 @@ function MathSumRenderer(props) {
                 continue;
             }
 
-            if(randomIndex in randomKeys) {
+            if(new RegExp(/(randomIndex)/g).test(JSON.stringify(randomKeys.values()))) {
                 i -= 1;
                 continue
             }
