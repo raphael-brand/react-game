@@ -12,35 +12,58 @@ function MathSumRenderer(props) {
 
     this.init();
 
-    this.update = () => {
+    this.update = (updatedFlatMap) => {
+        if(updatedFlatMap)
+            matrix = updatedFlatMap;
         return pickRandomField();
     }
 
     function pickRandomField() {
 
         let result = 0;
-        console.log(matrix);
         const flatMap = () => {
             // thanks to Vladimir Efanov
             return matrix.reduce((total, amount) => {
                 return total.concat(amount);
             }, []);
         }
-
-        let sortedFlatArray = flatMap().sort();
+        let sortedFlatArray;
+        
+        if(matrix[0][0])
+            sortedFlatArray = flatMap().sort();
+        else
+            sortedFlatArray = matrix;
+        
+        console.log(matrix);
+        
         let lastIndex = sortedFlatArray.length-1;
 
-        let randomValues = [];
+        let randomKeys = [];
 
         for(let i=min_tries; i<max_tries;i++) {
             const randomIndex = Math.floor(lastIndex*Math.random());
-            console.log('randomIndex', randomIndex)
-            randomValues.push(sortedFlatArray[randomIndex]);
-        }
 
-        randomValues.forEach((value) => {
-            result += value;
+            if(sortedFlatArray[randomIndex].clicked == true) {
+                i -= 1;
+                continue;
+            }
+
+            if(randomIndex in randomKeys) {
+                i -= 1;
+                continue
+            }
+            console.log('randomIndex', randomIndex)
+            randomKeys.push(randomIndex);
+        }
+        console.log('random values', randomKeys);
+        
+        randomKeys.forEach((key) => {
+            if(sortedFlatArray[key].key)
+                result += sortedFlatArray[key].value;
+            else
+                result += sortedFlatArray[key];
         });
+        console.log(`returning ${result}`)
         return parseInt(result);
     }
 
