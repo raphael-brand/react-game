@@ -29,7 +29,7 @@ describe('playfield interactions', () => {
 
         let matchIDs = generator.simpleByValue(startValue);
         
-        describe('exact match found', () => {
+        describe('match found', () => {
 
             it('has a button which value is equal or less than the task value', () => {
                 if(matchIDs.length >= 1) {
@@ -51,7 +51,7 @@ describe('playfield interactions', () => {
             });
         });
 
-        describe('no exact match found', () => {
+        describe('no match found', () => {
 
         });
 
