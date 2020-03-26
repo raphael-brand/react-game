@@ -36,7 +36,7 @@ export default class App extends Component {
     setSolved(obj) {
         this.remainingTiles.forEach((v,i,a) => {
             if(v.key == obj.key && v.value == obj.value) {
-                console.log('ogg', `key : ${v.key} value : ${obj.value}`)
+                // console.log('ogg', `key : ${v.key} value : ${obj.value}`)
                 //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
                 this.remainingTiles[i].played = true;
                // this.remainingTiles[i].clicked = true;
@@ -51,15 +51,15 @@ export default class App extends Component {
     updateTask(number, index, obj) {
 
 
-        console.log('key:', index, 'number:', number)
-        console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
+        // console.log('key:', index, 'number:', number)
+        // console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
         if (this.remainingTiles[index].played && this.remainingTiles[index].clicked) return;
         if (this.state.value < number) return;
 
-        console.log(
+        /* console.log(
             'remainingTiles amount: ', this.generator.simple().filter(this.isNotSolved).length,
             'sum: ', this.state.value
-        )
+        )*/
 
         if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
@@ -95,7 +95,12 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        console.log('... it worked so far. Sneaking onto the stage now.')
+        // console.log('... it worked so far. Sneaking onto the stage now.')
+    }
+
+    componentDidUpdate() {
+        this.countRenderUpdates++;
+        console.log(`DOM updated (${this.countRenderUpdates} times)`)
     }
 
     componentDidUpdate() {
