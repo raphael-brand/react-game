@@ -40,30 +40,39 @@ function MathSumRenderer(props) {
 
         let randomKeys = [];
 
-        for(let i=min_tries; i<max_tries;i++) {
+        for(let i=min_tries; randomKeys.length<max_tries; i++) {
             const randomIndex = Math.floor(lastIndex*Math.random());
 
+            if(i > max_tries || lastIndex <= i ) {
+                console.log('0')
+                randomKeys.push(randomIndex);    
+                break;
+            }
+
+            if(i < -10 || i > 100) break;
+
             if(sortedFlatArray[randomIndex].clicked == true || sortedFlatArray[randomIndex].played == true) {
-                i -= 1;
+                i -= 1; console.log('1');
+                //randomKeys.pop();
                 continue;
             }
 
             if(new RegExp(/(:randomIndex)/g).test(JSON.stringify(randomKeys.values()))) {
-                i -= 1;
+                i -= 1; console.log('2');
                 continue
             }
             console.log('randomIndex', randomIndex)
             randomKeys.push(randomIndex);
         }
         console.log('random values', randomKeys);
-        
+//        randomKeys = randomKeys.filter(geek => geek != undefined);
         randomKeys.forEach((key) => {
             if(sortedFlatArray[key].key)
                 result += sortedFlatArray[key].value;
             else
                 result += sortedFlatArray[key];
         });
-        console.log(`returning ${result}`)
+        console.log(`returning result`, result)
         return parseInt(result);
     }
 

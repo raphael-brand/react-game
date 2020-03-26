@@ -39,13 +39,13 @@ export default class App extends Component {
                 console.log('ogg', `key : ${v.key} value : ${obj.value}`)
                 //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
                 this.remainingTiles[i].played = true;
-                this.remainingTiles[i].clicked = true;
+               // this.remainingTiles[i].clicked = true;
             }
         })
     }
 
     newTask() {
-        this.setState({value: this.renderer.update(this.remainingTiles)});
+        this.setState({value: this.renderer.update(this.remainingTiles.filter(this.isNotSolved))});
     }
 
     updateTask(number, index, obj) {
