@@ -41,28 +41,36 @@ function MathSumRenderer(props) {
         let randomKeys = [];
 
         for(let i=min_tries; randomKeys.length<max_tries; i++) {
-            const randomIndex = Math.floor(lastIndex*Math.random());
 
-            if(i > max_tries || lastIndex <= i ) {
-                // console.log('0')
-                randomKeys.push(randomIndex);    
-                break;
-            }
+
+            randomIndex = Math.floor(lastIndex*Math.random());
+
+            
 
             if(i < -10 || i > 100) break;
 
-            if(sortedFlatArray[randomIndex].clicked == true || sortedFlatArray[randomIndex].played == true) {
-                i -= 1; // console.log('1');
-                
+
+/*            if(i > max_tries || lastIndex <= i ) {
+                console.log('0')
+                randomKeys.push(randomIndex);    
+                break;
+            }
+*/
+            // if double keys are found
+            let listContentString = JSON.stringify(randomKeys).replace(/\[([^\]]+)\]/g, "$1");
+            console.log(listContentString)
+            let match = listContentString.match(new RegExp('("'+randomIndex+'")', "g"));
+
+            if(match && match.length >= 2) {
+                i -= 1;
+                console.log('found 2');
                 continue;
             }
-
-            if(new RegExp(/(:randomIndex)/g).test(JSON.stringify(randomKeys.values()))) {
-                i -= 1; // console.log('2');
-                continue
+            else {
+                console.log('randomIndex', randomIndex)
+                randomKeys.push(""+randomIndex);
             }
-            // console.log('randomIndex', randomIndex)
-            randomKeys.push(randomIndex);
+
         }
         // console.log('random values', randomKeys);
 //        randomKeys = randomKeys.filter(geek => geek != undefined);
