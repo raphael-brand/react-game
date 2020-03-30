@@ -38,8 +38,11 @@ export default class App extends Component {
             if(v.key == obj.key && v.value == obj.value) {
                 // console.log('ogg', `key : ${v.key} value : ${obj.value}`)
                 //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
-                this.remainingTiles[i].played = true;
-               // this.remainingTiles[i].clicked = true;
+                if(this.remainingTiles[i].clicked == true) {
+                    this.remainingTiles[i].played = true;
+                    this.remainingTiles[i].clicked = true;
+                    document.querySelectorAll('.f.image')[obj.key].classList.add('played');
+                }
             }
         })
     }
@@ -51,9 +54,10 @@ export default class App extends Component {
     updateTask(number, index, obj) {
 
 
-        // console.log('key:', index, 'number:', number)
-        // console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
-        if (this.remainingTiles[index].played && this.remainingTiles[index].clicked) return;
+        console.log('key:', index, 'number:', number)
+        console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
+        console.log(this.remainingTiles)
+        // if (this.remainingTiles[index].played) return;
         if (this.state.value < number) return;
 
         /* console.log(
@@ -64,25 +68,25 @@ export default class App extends Component {
         if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
             this.remainingTiles[index].clicked = false;
-            obj.classList.remove('clicked');
+             obj.classList.remove('clicked');
         }
         else
         if (this.state.value - number > 0) {
             this.setState({ value: this.state.value - number });
             this.remainingTiles[index].clicked = true;
-            obj.classList.add('clicked');
+             obj.classList.add('clicked');
             
         } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
             this.setState({ value: this.state.value - number });
             
-            obj.classList.add('clicked');
-//            this.remainingTiles[index].clicked = true;
+             obj.classList.add('clicked');
+            this.remainingTiles[index].clicked = true;
             const clickedList = document.querySelectorAll('.clicked');
             let setSolvedKeys = [];
             clickedList.forEach((element) => {
                 const id = element.getAttribute('data-testid')
                 setSolvedKeys.push({"key": id, "value": this.generator.getFieldByIndex(id)[0].value });
-                element.classList.replace('clicked', 'played')                
+                element.classList.replace('clicked', 'played')           
             })
 
             //this.generator.getFieldByIndex(id)

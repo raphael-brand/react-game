@@ -44,7 +44,7 @@ function PlayfieldGenerator () {
 
 
 
-        sortByProperty(flatArray, "value", "DESC");
+//        sortByProperty(flatArray, "value", "DESC");
 
         return playfieldMatrix;
     }
