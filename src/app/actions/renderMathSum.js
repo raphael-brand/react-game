@@ -42,16 +42,13 @@ function MathSumRenderer(props) {
         let randomIndex;
         for(let i=min_tries; randomKeys.length<max_tries; i++) {
 
-        for(let i=min_tries; i<max_tries;i++) {
             const randomIndex = Math.floor(lastIndex*Math.random());
 
-            randomIndex = Math.floor(lastIndex*Math.random());
-
-            console.log('randomIndex', randomIndex)
             randomKeys.push(randomIndex);
             randomKeys = [...new Set(randomKeys)];
 
         }
+        
         console.log('random values', randomKeys);
         
         randomKeys.forEach((key) => {
