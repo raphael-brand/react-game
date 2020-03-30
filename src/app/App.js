@@ -48,7 +48,7 @@ export default class App extends Component {
     }
 
     newTask() {
-        this.setState({value: this.renderer.update(this.remainingTiles.filter(this.isNotSolved))});
+        this.setState({value: this.renderer.update(this.remainingTiles)});
     }
 
     updateTask(number, index, obj) {
