@@ -36,10 +36,13 @@ export default class App extends Component {
     setSolved(obj) {
         this.remainingTiles.forEach((v,i,a) => {
             if(v.key == obj.key && v.value == obj.value) {
-                // console.log('ogg', `key : ${v.key} value : ${obj.value}`)
-                //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
-                this.remainingTiles[i].played = true;
-               // this.remainingTiles[i].clicked = true;
+// console.log('ogg', `key : ${v.key} value : ${obj.value}`)
+// console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
+                if(this.remainingTiles[i].clicked == true) {
+                    this.remainingTiles[i].played = true;
+                    this.remainingTiles[i].clicked = false;
+                    document.querySelectorAll('.f.image')[obj.key].classList.add('played');
+                }
             }
         })
     }
@@ -50,42 +53,37 @@ export default class App extends Component {
 
     updateTask(number, index, obj) {
 
-
         // console.log('key:', index, 'number:', number)
         // console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
-        if (this.remainingTiles[index].played && this.remainingTiles[index].clicked) return;
-        if (this.state.value < number) return;
+        // console.log(this.remainingTiles)
 
-        /* console.log(
-            'remainingTiles amount: ', this.generator.simple().filter(this.isNotSolved).length,
-            'sum: ', this.state.value
-        )*/
+        if (this.state.value < number) return;
 
         if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
             this.remainingTiles[index].clicked = false;
-            obj.classList.remove('clicked');
+             obj.classList.remove('clicked');
         }
         else
         if (this.state.value - number > 0) {
             this.setState({ value: this.state.value - number });
             this.remainingTiles[index].clicked = true;
-            obj.classList.add('clicked');
+             obj.classList.add('clicked');
             
         } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
             this.setState({ value: this.state.value - number });
             
-            obj.classList.add('clicked');
-//            this.remainingTiles[index].clicked = true;
+             obj.classList.add('clicked');
+            this.remainingTiles[index].clicked = true;
             const clickedList = document.querySelectorAll('.clicked');
             let setSolvedKeys = [];
             clickedList.forEach((element) => {
                 const id = element.getAttribute('data-testid')
                 setSolvedKeys.push({"key": id, "value": this.generator.getFieldByIndex(id)[0].value });
-                element.classList.replace('clicked', 'played')                
+                element.classList.replace('clicked', 'played')           
             })
 
-            //this.generator.getFieldByIndex(id)
+
             setSolvedKeys.forEach(this.setSolved);
 
 
@@ -95,12 +93,17 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        // console.log('... it worked so far. Sneaking onto the stage now.')
+// console.log('... it worked so far. Sneaking onto the stage now.')
     }
 
     componentDidUpdate() {
         this.countRenderUpdates++;
-        console.log(`DOM updated (${this.countRenderUpdates} times)`)
+        // console.log(`DOM updated (${this.countRenderUpdates} times)`)
+    }
+
+    componentDidUpdate() {
+        this.countRenderUpdates++;
+        // console.log(`DOM updated (${this.countRenderUpdates} times)`)
     }
 
     render() {

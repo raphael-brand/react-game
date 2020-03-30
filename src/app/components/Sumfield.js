@@ -14,8 +14,8 @@ export class Sumfield extends Component {
 
     /*render() {
         this.result = this.random(this.props.value ? this.props.value : this.state.sum)
-        //        console.log('not solved', JSON.stringify(this.not_solved))
-        //        console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
+// console.log('not solved', JSON.stringify(this.not_solved))
+// console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
         return <div className="sumfield">{this.result.sum}</div>
     }*/
 
@@ -63,7 +63,7 @@ export class Sumfield extends Component {
             return;
         }
 
-        //        console.log('remaining sum:', remaining, { isLower, isGreater });
+// console.log('remaining sum:', remaining, { isLower, isGreater });
 
         return { sum: newVal, remaining, not_solved: this.not_solved };
     }
