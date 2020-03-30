@@ -30,7 +30,7 @@ function MathSumRenderer(props) {
         let sortedFlatArray;
         
         if(matrix[0][0])
-            sortedFlatArray = flatMap().sort();
+            sortedFlatArray = flatMap()
         else
             sortedFlatArray = matrix;
         
@@ -39,37 +39,15 @@ function MathSumRenderer(props) {
         let lastIndex = sortedFlatArray.length-1;
 
         let randomKeys = [];
-
+        let randomIndex;
         for(let i=min_tries; randomKeys.length<max_tries; i++) {
 
 
             randomIndex = Math.floor(lastIndex*Math.random());
 
-            
-
-            if(i < -10 || i > 100) break;
-
-
-/*            if(i > max_tries || lastIndex <= i ) {
-                console.log('0')
-                randomKeys.push(randomIndex);    
-                break;
-            }
-*/
-            // if double keys are found
-            let listContentString = JSON.stringify(randomKeys).replace(/\[([^\]]+)\]/g, "$1");
-            console.log(listContentString)
-            let match = listContentString.match(new RegExp('("'+randomIndex+'")', "g"));
-
-            if(match && match.length >= 2) {
-                i -= 1;
-                console.log('found 2');
-                continue;
-            }
-            else {
-                console.log('randomIndex', randomIndex)
-                randomKeys.push(""+randomIndex);
-            }
+            console.log('randomIndex', randomIndex)
+            randomKeys.push(randomIndex);
+            randomKeys = [...new Set(randomKeys)];
 
         }
         console.log('random values', randomKeys);
