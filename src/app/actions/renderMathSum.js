@@ -42,6 +42,8 @@ function MathSumRenderer(props) {
         let randomIndex;
         for(let i=min_tries; randomKeys.length<max_tries; i++) {
 
+        for(let i=min_tries; i<max_tries;i++) {
+            const randomIndex = Math.floor(lastIndex*Math.random());
 
             randomIndex = Math.floor(lastIndex*Math.random());
 
@@ -50,15 +52,15 @@ function MathSumRenderer(props) {
             randomKeys = [...new Set(randomKeys)];
 
         }
-        // console.log('random values', randomKeys);
-//        randomKeys = randomKeys.filter(geek => geek != undefined);
+        console.log('random values', randomKeys);
+        
         randomKeys.forEach((key) => {
             if(sortedFlatArray[key].key)
                 result += sortedFlatArray[key].value;
             else
                 result += sortedFlatArray[key];
         });
-        // console.log(`returning result`, result)
+        console.log(`returning ${result}`)
         return parseInt(result);
     }
 
