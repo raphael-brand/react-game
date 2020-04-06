@@ -3,18 +3,25 @@ function MathSumRenderer(props) {
     const max_tries = 4;
 
     let matrix;
-    let startValue;
+    let remainingCount = 1111;
 
     this.init = () => {
         matrix = props.matrix;
+        if(matrix[matrix.length-1][1] == undefined) {
+            remainingCount = matrix.splice(matrix.length-1, 1)[0]
+        }
         return pickRandomField();
     }
 
     this.init();
 
     this.update = (updatedFlatMap) => {
-        if(updatedFlatMap)
+        if(updatedFlatMap) {
             matrix = updatedFlatMap;
+            remainingCount = matrix.splice(matrix.length-1, 1)[0]
+        }
+
+        console.log(`remainingCount: ${remainingCount}`)
         return pickRandomField();
     }
 
@@ -42,22 +49,52 @@ function MathSumRenderer(props) {
         let randomIndex;
         for(let i=min_tries; randomKeys.length<max_tries; i++) {
 
-            const randomIndex = Math.floor(lastIndex*Math.random());
+            if(remainingCount <= max_tries) {
+                sortedFlatArray.forEach(geek => {
+                    if(geek.played === false)
+                        randomKeys.push(geek.key)
+                });
+                break;
+            }
+            else {
+                randomIndex = Math.floor(lastIndex*Math.random());
 
-            randomKeys.push(randomIndex);
-            randomKeys = [...new Set(randomKeys)];
+                if(i > lastIndex)
+                    break;
+
+                if(sortedFlatArray[randomIndex].key && sortedFlatArray[randomIndex].played == true && sortedFlatArray[randomIndex].clicked == true)
+                    continue;
+
+                randomKeys.push(randomIndex);
+                randomKeys = [...new Set(randomKeys)];
+
+            }
 
         }
         
         console.log('random values', randomKeys);
         
         randomKeys.forEach((key) => {
-            if(sortedFlatArray[key].key)
-                result += sortedFlatArray[key].value;
-            else
-                result += sortedFlatArray[key];
+            if(sortedFlatArray[key].key >= 0) {
+                
+                result += parseInt(sortedFlatArray[key].value);
+            }
+            else {
+                result += parseInt(sortedFlatArray[key]);
+            }
         });
-        console.log(`returning ${result}`)
+
+        console.log(`returning ${result}`, result)
+
+        if(remainingCount > 0)
+            return parseInt(result);
+        else if(remainingCount == 0) {
+            alert('You won!')
+            return 11111;
+        }
+        
+
+
         return parseInt(result);
     }
 

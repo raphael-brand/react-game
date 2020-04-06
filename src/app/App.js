@@ -16,14 +16,18 @@ export default class App extends Component {
         this.generator.init()
 
         const playfield = this.generator.restart();
-        this.renderer = new MathSumRenderer({ matrix: playfield });
-
+        
+        this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
+        playfield.push(this.remainingTiles.length);
+        this.renderer = new MathSumRenderer({ matrix: playfield});
+        
         this.state = {
             value: this.renderer.init(),
-            playfield: playfield
+            playfield: playfield,
+            solvedCount: this.remainingTiles.length
         };
 
-        this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
+        console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
         
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
@@ -34,6 +38,7 @@ export default class App extends Component {
     }
 
     setSolved(obj) {
+        let notSolved = 0;
         this.remainingTiles.forEach((v,i,a) => {
             if(v.key == obj.key && v.value == obj.value) {
                 // console.log('ogg', `key : ${v.key} value : ${obj.value}`)
@@ -44,21 +49,28 @@ export default class App extends Component {
                     document.querySelectorAll('.f.image')[obj.key].classList.add('played');
                 }
             }
-        })
+            else notSolved++;
+        });
+
+        this.setState({solvedCount: this.state.solvedCount - notSolved})
+        console.log(`notSolved var count after update: ${this.state.solvedCount}`)
     }
 
     newTask() {
+        this.remainingTiles.push(this.state.solvedCount);
         this.setState({value: this.renderer.update(this.remainingTiles)});
     }
 
     updateTask(number, index, obj) {
 
 
+        this.setState({solvedCount: this.generator.simple().filter(this.isNotSolved).length});
+        
         console.log('key:', index, 'number:', number)
         console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
         console.log(this.remainingTiles)
         // if (this.remainingTiles[index].played) return;
-        if (this.state.value < number) return;
+        if (this.state.value < number && this.remainingTiles[index].clicked == false) return;
 
         /* console.log(
             'remainingTiles amount: ', this.generator.simple().filter(this.isNotSolved).length,
@@ -86,7 +98,7 @@ export default class App extends Component {
             clickedList.forEach((element) => {
                 const id = element.getAttribute('data-testid')
                 setSolvedKeys.push({"key": id, "value": this.generator.getFieldByIndex(id)[0].value });
-                element.classList.replace('clicked', 'played')           
+                element.classList.add('played')  
             })
 
             //this.generator.getFieldByIndex(id)
