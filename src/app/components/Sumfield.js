@@ -58,7 +58,7 @@ export class Sumfield extends Component {
 
         if (this.props.remainingTiles === 0) {
             //            this.setState({ matrix: [] });
-            alert('you won!')
+            //alert('you won!')
             this.props.reset();
             return;
         }
