@@ -51,14 +51,19 @@ export default class App extends Component {
             }
             else notSolved++;
         });
+        if(notSolved > this.state.solvedCount) {
+            this.setState({solvedCount: this.state.solvedCount - notSolved})
+        }
 
-        this.setState({solvedCount: this.state.solvedCount - notSolved})
         console.log(`notSolved var count after update: ${this.state.solvedCount}`)
     }
 
     newTask() {
-        this.remainingTiles.push(this.state.solvedCount);
-        this.setState({value: this.renderer.update(this.remainingTiles)});
+        if(this.remainingTiles.length > 0) {
+            this.remainingTiles.push(this.state.solvedCount);
+            this.setState({value: this.renderer.update(this.remainingTiles)});
+        }
+        
     }
 
     updateTask(number, index, obj) {

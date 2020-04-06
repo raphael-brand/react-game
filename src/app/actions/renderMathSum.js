@@ -86,11 +86,11 @@ function MathSumRenderer(props) {
 
         console.log(`returning ${result}`, result)
 
-        if(remainingCount > 0)
+        if(result > 0)
             return parseInt(result);
-        else if(remainingCount == 0) {
+        else {
             alert('You won!')
-            return 11111;
+            return null;
         }
         
 
