@@ -1,6 +1,6 @@
 function MathSumRenderer(props) {
-    const min_tries = 1;
-    const max_tries = 4;
+    const min_summand_amount = 1;
+    const max_summand_amount = 4;
 
     let matrix;
     let remainingCount = 0;
@@ -48,7 +48,7 @@ function MathSumRenderer(props) {
 
         let randomKeys = [];
         let randomIndex;
-        for(let i=min_tries; randomKeys.length<max_tries; i++) {
+        for(let i=min_summand_amount; randomKeys.length<max_summand_amount; i++) {
 
             if(isLastTask()) {
                 sortedFlatArray.forEach(geek => {
@@ -86,7 +86,7 @@ function MathSumRenderer(props) {
         });
 
         console.log(`returning ${result}`, result)
-        if(result > 29) {
+        if(parseInt(result) > 29) {
             let err = new Error(`result too big: ${result} restarting ...`);
             pickRandomCallCount++;
             if(pickRandomCallCount > 10)
@@ -111,9 +111,9 @@ function MathSumRenderer(props) {
     function isLastTask() {
         if(matrix[1][1] != undefined) return false;
         let rest = Math.floor((matrix.length/100) * 17);
-        console.log(`Is it the last task? Calculated rest amount (${rest}) greater than ${remainingCount}`)
-        console.log(remainingCount  <= max_tries || remainingCount <= rest  ? 'yes': 'no');
-        return remainingCount  <= max_tries || remainingCount <= rest;
+        console.log(`Is it the last task? Calculated rest amount (${rest}) greater than or equals ${remainingCount}`)
+        console.log(remainingCount <= rest || rest  <= max_summand_amount ? 'yes': 'no');
+        return remainingCount <= rest || rest  <= max_summand_amount;
     }
 
     function createFromPlayfieldValues() {
