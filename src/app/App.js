@@ -34,6 +34,10 @@ export default class App extends Component {
     }
 
     isNotSolved(field) {
+        return field.played !== true;
+    }
+
+    isNotClicked(field) {
         return field.clicked !== true;
     }
 
@@ -45,7 +49,7 @@ export default class App extends Component {
                 //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
                 if(this.remainingTiles[i].clicked == true) {
                     this.remainingTiles[i].played = true;
-                    this.remainingTiles[i].clicked = true;
+                    //this.remainingTiles[i].clicked = false;
                     document.querySelectorAll('.f.image')[obj.key].classList.add('played');
                 }
             }
@@ -69,8 +73,8 @@ export default class App extends Component {
     updateTask(number, index, obj) {
 
 
-        this.setState({solvedCount: this.generator.simple().filter(this.isNotSolved).length});
-        
+        this.setState({solvedCount: this.remainingTiles.filter(this.isNotClicked).length});
+        console.log(`solvedCount: ${this.state.solvedCount}`);
         console.log('key:', index, 'number:', number)
         console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
         console.log(this.remainingTiles)
