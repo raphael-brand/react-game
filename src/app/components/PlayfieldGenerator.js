@@ -5,7 +5,7 @@ function PlayfieldGenerator () {
 //    const [matrixSize, setSize] = useState(5)
 //    const [playfieldMatrix, setPlayfieldMatrix] = useState(generate(matrixSize));
     const sum_min = 2;
-    const sum_max = 27;
+    const sum_max = 29;
 
     let setPlayfieldMatrix;
     let matrixSize;
