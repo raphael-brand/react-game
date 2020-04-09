@@ -11,6 +11,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.countRenderUpdates = 0;
+        this.solvedCount = 0;
         this.state = {value: 0};
         this.generator = new PlayfieldGenerator()
         this.generator.init()
@@ -72,8 +73,11 @@ export default class App extends Component {
 
     updateTask(number, index, obj) {
 
-
-        this.setState({solvedCount: this.remainingTiles.filter(this.isNotClicked).length});
+        // console.log('key:', index, 'number:', number)
+        // console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
+        // console.log(this.remainingTiles)
+        this.solvedCount = this.remainingTiles.filter(this.isNotClicked).length;
+        this.setState({solvedCount: this.solvedCount});
         console.log(`solvedCount: ${this.state.solvedCount}`);
         console.log('key:', index, 'number:', number)
         console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
