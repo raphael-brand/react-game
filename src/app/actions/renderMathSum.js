@@ -112,8 +112,8 @@ function MathSumRenderer(props) {
         if(matrix[1][1] != undefined) return false;
         let rest = Math.floor((matrix.length/100) * 17);
         console.log(`Is it the last task? Calculated rest amount (${rest}) greater than ${remainingCount}`)
-        console.log(remainingCount <= rest || rest  <= max_tries ? 'yes': 'no');
-        return remainingCount <= rest || rest  <= max_tries;
+        console.log(remainingCount  <= max_tries || remainingCount <= rest  ? 'yes': 'no');
+        return remainingCount  <= max_tries || remainingCount <= rest;
     }
 
     function createFromPlayfieldValues() {
