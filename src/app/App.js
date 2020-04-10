@@ -24,6 +24,11 @@ export default class App extends Component {
 
 
     initDefaults() {
+
+        if(this.timeout > 0) {
+            clearTimeout(this.timeout);
+        }
+
         this.timeout = 0;
         this.countRenderUpdates = 0;
         this.solvedCount = 0;
@@ -54,8 +59,9 @@ export default class App extends Component {
                 this.countdown();
             }
             else {
-                this.setState({playfield: this.generator.restart(Math.sqrt(this.remainingTiles.length))});
-                clearTimeout(this.timeout);
+//                this.setState({playfield: this.generator.restart(Math.sqrt(this.remainingTiles.length))});
+//                clearTimeout(this.timeout);
+
                 this.initDefaults();
                 this.countdown();
             }
@@ -156,7 +162,7 @@ export default class App extends Component {
         console.log(`DOM updated (${this.countRenderUpdates} times)`)
         console.log(this.solvedCount);
 
-        if(this.solvedCount <= 1) {
+        if(this.solvedCount <= 1 && this.state.value == 0) {
             document.querySelectorAll('.f.image').forEach((v,i,o) => {
                 o[i].classList.remove('played');
             });
