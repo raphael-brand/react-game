@@ -25,13 +25,36 @@ export default class App extends Component {
         this.state = {
             value: this.renderer.init(),
             playfield: playfield,
-            solvedCount: this.remainingTiles.length
+            solvedCount: this.remainingTiles.length,
+            countdown: 60
         };
 
+        
         console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
         
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
+        
+        this.countdown();
+    }
+
+
+    countdown() {
+
+        this.timeout = setTimeout(() => {
+            if (this.state.countdown > 1) {
+                this.setState({ countdown: this.state.countdown - 1 })
+                console.log('counting ...')
+                this.countdown();
+            }
+            else {
+                this.setState({playfield: this.generator.restart(Math.sqrt(this.remainingTiles.length))});
+                clearTimeout(this.timeout);
+                this.timeout = 0;
+            }
+        }
+            , 1000);
+
     }
 
     isNotSolved(field) {
@@ -124,12 +147,19 @@ export default class App extends Component {
 
     componentDidUpdate() {
         this.countRenderUpdates++;
-        // console.log(`DOM updated (${this.countRenderUpdates} times)`)
-    }
+        console.log(`DOM updated (${this.countRenderUpdates} times)`)
+        console.log(this.solvedCount);
 
-    componentDidUpdate() {
-        this.countRenderUpdates++;
-        // console.log(`DOM updated (${this.countRenderUpdates} times)`)
+        if(this.solvedCount <= 1) {
+            document.querySelectorAll('.f.image').forEach((v,i,o) => {
+                o[i].classList.remove('played');
+            });
+
+            this.remainingTiles = this.generator.simple();
+            let playfield = this.generator.restart()
+            playfield.push(this.remainingTiles.length);
+            this.renderer = new MathSumRenderer({ matrix: playfield});
+        }
     }
 
     render() {
@@ -138,6 +168,7 @@ export default class App extends Component {
             <div>
                 <PlayfieldView onClick={this.updateTask} matrix={this.state.playfield}>
                     <Sumfield value={this.state.value}></Sumfield>
+                    <p id="countdown">{this.state.countdown}</p>
                 </PlayfieldView>
             </div>
         );
