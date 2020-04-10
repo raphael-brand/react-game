@@ -98,12 +98,9 @@ function MathSumRenderer(props) {
             return parseInt(result);
         else {
             alert('You won!')
+            this.props.restart();
             return null;
         }
-        
-
-
-        return parseInt(result);
     }
     /* calculates the threshold in relation of matrix size and remaining count 
     of a floored value of approx. 17 percent

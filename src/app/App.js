@@ -35,7 +35,7 @@ export default class App extends Component {
         
         this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         playfield.push(this.remainingTiles.length);
-        this.renderer = new MathSumRenderer({ matrix: playfield});
+        this.renderer = new MathSumRenderer({ matrix: playfield, restart: this.initDefaults});
         
         this.state = {
             value: this.renderer.init(),
@@ -166,10 +166,7 @@ export default class App extends Component {
                 o[i].classList.remove('played');
             });
 
-            this.remainingTiles = this.generator.simple();
-            let playfield = this.generator.restart()
-            playfield.push(this.remainingTiles.length);
-            this.renderer = new MathSumRenderer({ matrix: playfield});
+            this.initDefaults();
         }
     }
 
