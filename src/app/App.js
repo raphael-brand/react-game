@@ -10,6 +10,21 @@ export default class App extends Component {
     
     constructor(props) {
         super(props);
+
+        this.initDefaults();
+        
+        console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
+        
+        this.countdown();
+
+        this.setSolved = this.setSolved.bind(this);
+        this.updateTask = this.updateTask.bind(this);
+        
+    }
+
+
+    initDefaults() {
+        this.timeout = 0;
         this.countRenderUpdates = 0;
         this.solvedCount = 0;
         this.state = {value: 0};
@@ -28,33 +43,24 @@ export default class App extends Component {
             solvedCount: this.remainingTiles.length,
             countdown: 60
         };
-
-        
-        console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
-        
-        this.setSolved = this.setSolved.bind(this);
-        this.updateTask = this.updateTask.bind(this);
-        
-        this.countdown();
     }
-
 
     countdown() {
 
         this.timeout = setTimeout(() => {
             if (this.state.countdown > 1) {
-                this.setState({ countdown: this.state.countdown - 1 })
+                this.setState({ countdown: this.state.countdown - 1});
                 console.log('counting ...')
                 this.countdown();
             }
             else {
                 this.setState({playfield: this.generator.restart(Math.sqrt(this.remainingTiles.length))});
                 clearTimeout(this.timeout);
-                this.timeout = 0;
+                this.initDefaults();
+                this.countdown();
             }
         }
             , 1000);
-
     }
 
     isNotSolved(field) {
