@@ -52,13 +52,40 @@ function MathSumRenderer(props) {
         // console.log('random values', randomKeys);
         
         randomKeys.forEach((key) => {
-            if(sortedFlatArray[key].key)
-                result += sortedFlatArray[key].value;
+            let num = 0;
+            if(sortedFlatArray[key].key >= 0) {
+                
+                num = parseInt(sortedFlatArray[key].value);
+            }
+            else {
+                num = parseInt(sortedFlatArray[key]);
+            }
+
+
+            if(result + num > 29)
+                return;
             else
-                result += sortedFlatArray[key];
+                result += num;
         });
-// console.log(`returning result`, result)
-        return parseInt(result);
+
+        console.log(`returning ${result}`, result)
+        if(result > 0)
+            return parseInt(result);
+        else {
+            alert('You won!')
+            this.props.restart();
+            return null;
+        }
+    }
+    /* calculates the threshold in relation of matrix size and remaining count 
+    of a floored value of approx. 17 percent
+     */
+    function isLastTask() {
+        if(matrix[1][1] != undefined) return false;
+        let rest = Math.floor((matrix.length/100) * 17);
+        console.log(`Is it the last task? Calculated rest amount (${rest}) greater than or equals ${remainingCount}`)
+        console.log(remainingCount <= rest && remainingCount < 29 ? 'yes': 'no');
+        return remainingCount <= rest && remainingCount < 29;
     }
 
     function createFromPlayfieldValues() {
