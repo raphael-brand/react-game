@@ -76,24 +76,23 @@ function MathSumRenderer(props) {
         console.log('random values', randomKeys);
         
         randomKeys.forEach((key) => {
+            let num = 0;
             if(sortedFlatArray[key].key >= 0) {
                 
-                result += parseInt(sortedFlatArray[key].value);
+                num = parseInt(sortedFlatArray[key].value);
             }
             else {
-                result += parseInt(sortedFlatArray[key]);
+                num = parseInt(sortedFlatArray[key]);
             }
+
+
+            if(result + num > 29)
+                return;
+            else
+                result += num;
         });
 
         console.log(`returning ${result}`, result)
-        if(parseInt(result) > 29) {
-            let err = new Error(`result too big: ${result} restarting ...`);
-            pickRandomCallCount++;
-            if(pickRandomCallCount > 10)
-                throw err;
-            else
-                pickRandomField()
-        }
         if(result > 0)
             return parseInt(result);
         else {
