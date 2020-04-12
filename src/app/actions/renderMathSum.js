@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function MathSumRenderer(props) {
     const min_summand_amount = 1;
     const max_summand_amount = 4;
@@ -120,6 +122,11 @@ function MathSumRenderer(props) {
     }
 
 
+}
+
+MathSumRenderer.propTypes = {
+    restart: PropTypes.func.isRequired,
+    matrix: PropTypes.array.isRequired
 }
 
 export default MathSumRenderer;
