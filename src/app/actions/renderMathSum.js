@@ -14,7 +14,7 @@ function MathSumRenderer(props) {
         if(matrix[matrix.length-1][1] == undefined) {
             remainingCount = matrix.splice(matrix.length-1, 1)[0]
         }
-        return pickRandomField();
+        return createTask();
     }
 
     this.init();
@@ -26,10 +26,15 @@ function MathSumRenderer(props) {
         }
 
         console.log(`remainingCount: ${remainingCount}`)
-        return pickRandomField();
+        return createTask();
     }
 
-    function pickRandomField() {
+    /**
+     *
+     *
+     * @returns
+     */
+    function createTask() {
 
         let result = 0;
         const flatMap = () => {
@@ -121,9 +126,9 @@ function MathSumRenderer(props) {
     }
 
     function createFromPlayfieldValues() {
-        this.result = pickRandomField()
-        // console.log('not solved', JSON.stringify(this.not_solved))
-        // console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
+        this.result = createTask()
+// console.log('not solved', JSON.stringify(this.not_solved))
+// console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
         return this.result;
     }
 
