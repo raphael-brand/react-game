@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
@@ -59,11 +60,8 @@ export default class App extends Component {
                 this.countdown();
             }
             else {
-//                this.setState({playfield: this.generator.restart(Math.sqrt(this.remainingTiles.length))});
-//                clearTimeout(this.timeout);
-
-                this.initDefaults();
-                this.countdown();
+                alert('You lost ... :(')
+                ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
             }
         }
             , 1000);
@@ -158,6 +156,17 @@ export default class App extends Component {
         else return;
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
+        this.timeout = 0;
+        setTimeout(() => {
+            ReactDOM.render(
+                <App />,
+                document.querySelector('#app')
+            )
+        }, 0);
+
+    }
     componentDidMount() {
         // console.log('... it worked so far. Sneaking onto the stage now.')
     }

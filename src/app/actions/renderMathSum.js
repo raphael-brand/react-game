@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 
 function MathSumRenderer(props) {
     const min_summand_amount = 1;
@@ -99,8 +100,13 @@ function MathSumRenderer(props) {
             return parseInt(result);
         else {
             alert('You won!')
-            this.props.restart();
-            return null;
+            setTimeout(() => {
+                ReactDOM.render(
+                    <App />,
+                    document.querySelector('#app')
+                )
+            }, 20);
+            ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
         }
     }
     /* calculates the threshold in relation of matrix size and remaining count 
