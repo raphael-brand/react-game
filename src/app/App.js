@@ -60,7 +60,7 @@ export default class App extends Component {
                 this.countdown();
             }
             else {
-                alert('You lost ... :(')
+                alert('Game over')
                 ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
             }
         }
@@ -190,8 +190,10 @@ export default class App extends Component {
         return (
             <div>
                 <PlayfieldView onClick={this.updateTask} matrix={this.state.playfield}>
-                    <Sumfield value={this.state.value}></Sumfield>
-                    <p id="countdown">{this.state.countdown}</p>
+                    <div className="data-display-container">
+                        <Sumfield value={this.state.value}></Sumfield>
+                        <div id="countdown">{this.state.countdown}</div>
+                    </div>
                 </PlayfieldView>
             </div>
         );

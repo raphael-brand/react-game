@@ -13,37 +13,18 @@ pre {
   padding: 3px;
   border: 1px solid maroon; }
 
-.sumfield {
-  position: absolute;
-  display: inline;
-  font-size: 10rem;
-  margin-right: 2vw;
-  right: 2vw; }
-
-.game, .sumfield {
+.game {
   font-family: 'Ultra', serif; }
 
-.game > div {
-  border-width: 3px; }
+.current-task, #countdown {
+  font-size: 2.5em; }
 
-.game > div, .row > div {
-  border-radius: 14px; }
-
-.game > .wrap {
-  display: grid;
-  width: max-content; }
-
-.row > div {
+.playfield-button {
+  border-radius: 5px;
   border: 1px solid slategray;
   background-color: slategray;
   float: left;
-  font-size: 2.5em;
-  display: block;
-  width: 16.66667vw;
-  height: 16.66667vw;
-  line-height: 16.66667vw;
-  text-align: center;
-  cursor: pointer; }
+  font-size: 2.5em; }
 
 .image {
   background-image: url(../img/spritesheet_padding_2px.png);
@@ -65,17 +46,19 @@ pre {
   100% {
     opacity: 0; } }
 
-#countdown {
-  position: absolute;
-  display: inline;
-  font-size: 10rem;
-  margin-right: 2vw;
-  right: 2vw;
-  top: 1.3em;
-  font-size: 1.3em; }
+.playfield-container {
+  grid-template-columns: 1fr; }
 
-@keyframes count {
-  from {
-    background-position: 0 0; }
-  to {
-    background-position: -166vw 0; } }
+.playfield-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(16.66667vw, auto); }
+
+.playfield-button {
+  grid-auto-columns: 1fr; }
+
+.data-display-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; }
+  .data-display-container > div {
+    grid-auto-columns: 1fr; }

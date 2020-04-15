@@ -14,9 +14,9 @@ export class Sumfield extends Component {
 
     /*render() {
         this.result = this.random(this.props.value ? this.props.value : this.state.sum)
-        //        console.log('not solved', JSON.stringify(this.not_solved))
-        //        console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
-        return <div className="sumfield">{this.result.sum}</div>
+// console.log('not solved', JSON.stringify(this.not_solved))
+// console.log('remaining:', this.props.remainingTiles, 'remaining sum: ', this.result.remaining)
+        return <div className="current-task">{this.result.sum}</div>
     }*/
 
     render() {
@@ -24,7 +24,7 @@ export class Sumfield extends Component {
             sum: this.props.value ? this.props.value : this.state.sum
         }
 
-        return <div className="sumfield">{this.result.sum}</div>
+        return <div className="current-task">{this.result.sum}</div>
     }
     random(val) {
 

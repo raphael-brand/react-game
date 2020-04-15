@@ -23,7 +23,7 @@ describe('playfield interactions', () => {
 
         it('has a task created', () => {
             expect(parseInt(
-                wrapper.find('.sumfield').text())
+                wrapper.find('.current-task').text())
             ).toBe(startValue);
         });
 

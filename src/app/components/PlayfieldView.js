@@ -33,17 +33,17 @@ export class PlayfieldView extends Component {
                 // if playfield size shall be 50vw 
                 const size = 50 / array.length;
                 const style = {
-                    backgroundPositionX: (Number(number_value) * (50 / array.length) * -1) + 'vw',
-                    width: size + 'vw', height: size + 'vw', lineHeight: size + 'vw',
+                    backgroundPositionX: (parseInt(number_value) * 11.1) + '%',
+                    //width: size + 'vw', height: size + 'vw', lineHeight: size + 'vw',
                     filter: colors.baseFilter + ' ' + colors.colors[colors.numberColors[number_value - 1]]
                 }
                 const field =
-                    <div key={i} data-testid={i} style={style} className="f image" onClick={this.clickHandler(i, number_value)}></div>
+                    <div key={i} data-testid={i} style={style} className="playfield-button f image" onClick={this.clickHandler(i, number_value)}></div>
 
                 numberRow.push(field);
                 i++;
             });
-            playfield.push(<div key={index} className="row" > {numberRow}</div>)
+            playfield.push(<div key={index} className="playfield-row row" > {numberRow}</div>)
         });
 
         return playfield;
@@ -51,12 +51,12 @@ export class PlayfieldView extends Component {
 
     render() {
         return (
-            <div>
-                {this.props.children}
+            <div className="view-container">
                 <div className="game">
-                    <div className="wrap">
+                    <div className="playfield-container wrap">
                         {this.renderPlayfield(this.props.matrix)}
                     </div>
+                {this.props.children}
                 </div>
             </div>
         );
