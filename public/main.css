@@ -51,8 +51,8 @@ pre {
 
 .playfield-row {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: minmax(16.66667vw, auto); }
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: minmax(12.5vw, auto); }
 
 .playfield-button {
   grid-auto-columns: 1fr; }
