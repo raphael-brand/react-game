@@ -52,11 +52,18 @@ pre {
   filter: invert(100%) sepia(100%) saturate(100%) brightness(100%) contrast(100%); }
 
 .clicked {
-  opacity: 0.3; }
+  opacity: .5; }
 
 .played {
-  opacity: 0;
-  cursor: default !important; }
+  cursor: default !important;
+  animation: fadeout 500ms alternate;
+  opacity: 0; }
+
+@keyframes fadeout {
+  0% {
+    opacity: .5; }
+  100% {
+    opacity: 0; } }
 
 #countdown {
   position: absolute;
@@ -64,7 +71,8 @@ pre {
   font-size: 10rem;
   margin-right: 2vw;
   right: 2vw;
-  top: 1.3em; }
+  top: 1.3em;
+  font-size: 1.3em; }
 
 @keyframes count {
   from {

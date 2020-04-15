@@ -64,10 +64,17 @@ pre
 //    animation: count 10s steps(10) infinite
 
 .clicked
-    opacity: 0.3
+    opacity: .5
 .played
-    opacity: 0
     cursor: default !important
+    animation: fadeout 500ms alternate
+    opacity: 0
+
+@keyframes fadeout
+    0%
+        opacity: .5
+    100%
+        opacity: 0
 
 #countdown
     position: absolute
@@ -76,6 +83,7 @@ pre
     margin-right: 2vw
     right: 2vw
     top: 1.3em
+    font-size: 1.3em
 
 @keyframes count
     from
