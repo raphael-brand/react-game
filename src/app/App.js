@@ -33,7 +33,7 @@ export default class App extends Component {
         this.timeout = 0;
         this.countRenderUpdates = 0;
         this.solvedCount = 0;
-        this.state = {value: 0};
+        this.state = {value: 0, displayValue: 0};
         this.generator = new PlayfieldGenerator()
         this.generator.init()
 
@@ -42,10 +42,11 @@ export default class App extends Component {
         this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         playfield.push(this.remainingTiles.length);
         this.renderer = new MathSumRenderer({ matrix: playfield, restart: this.initDefaults});
-        
+        let newVal = this.renderer.init();
         this.state = {
-            value: this.renderer.init(),
+            value: newVal,
             playfield: playfield,
+            displayValue: newVal,
             solvedCount: this.remainingTiles.length,
             countdown: 60
         };
@@ -99,7 +100,8 @@ export default class App extends Component {
     newTask() {
         if(this.remainingTiles.length > 0) {
             this.remainingTiles.push(this.state.solvedCount);
-            this.setState({value: this.renderer.update(this.remainingTiles)});
+            let newValue = this.renderer.update(this.remainingTiles);
+            this.setState({value: newValue, displayValue: newValue});
         }
         
     }
@@ -191,7 +193,7 @@ export default class App extends Component {
             <div>
                 <PlayfieldView onClick={this.updateTask} matrix={this.state.playfield}>
                     <div className="data-display-container">
-                        <Sumfield value={this.state.value}></Sumfield>
+                        <Sumfield value={this.state.displayValue}></Sumfield>
                         <div id="countdown">{this.state.countdown}</div>
                     </div>
                 </PlayfieldView>
