@@ -65,7 +65,7 @@ pre
 //    animation: count 10s steps(10) infinite
 
 .clicked
-    opacity: .5
+    opacity: .3
 .played
     cursor: default !important
     animation: fadeout 500ms alternate
@@ -73,7 +73,7 @@ pre
 
 @keyframes fadeout
     0%
-        opacity: .5
+        opacity: .3
     100%
         opacity: 0
 
@@ -105,6 +105,9 @@ pre
 
 .playfield-button
     grid-auto-columns: 1fr
+
+    &.clicked
+        border: 1px solid yellow
 
 .data-display-container
     display: grid

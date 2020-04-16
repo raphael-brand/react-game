@@ -33,7 +33,7 @@ pre {
   filter: invert(100%) sepia(100%) saturate(100%) brightness(100%) contrast(100%); }
 
 .clicked {
-  opacity: .5; }
+  opacity: .3; }
 
 .played {
   cursor: default !important;
@@ -42,7 +42,7 @@ pre {
 
 @keyframes fadeout {
   0% {
-    opacity: .5; }
+    opacity: .3; }
   100% {
     opacity: 0; } }
 
@@ -56,6 +56,8 @@ pre {
 
 .playfield-button {
   grid-auto-columns: 1fr; }
+  .playfield-button.clicked {
+    border: 1px solid yellow; }
 
 .data-display-container {
   display: grid;
