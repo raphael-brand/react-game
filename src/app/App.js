@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
-import { Sumfield } from './components/Sumfield'
-
+import { DataDisplay } from './components/DataDisplay'
 
 export default class App extends Component {
 
@@ -188,16 +187,16 @@ export default class App extends Component {
     }
 
     render() {
+        let {playfield, displayValue, countdown} = this.state;
 
         return (
-            <div>
-                <PlayfieldView onClick={this.updateTask} matrix={this.state.playfield}>
-                    <div className="data-display-container">
-                        <Sumfield value={this.state.displayValue}></Sumfield>
-                        <div id="countdown">{this.state.countdown}</div>
-                    </div>
+            <Fragment>
+                <PlayfieldView onClick={this.updateTask} matrix={playfield}>
                 </PlayfieldView>
-            </div>
+                <DataDisplay displayValue={displayValue} countdown={countdown}>
+                </DataDisplay>
+                <i id="message"></i>
+            </Fragment>
         );
     }
 }

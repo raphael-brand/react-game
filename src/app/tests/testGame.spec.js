@@ -5,7 +5,7 @@ import './setupTests';
 import PlayfieldGenerator from './../components/PlayfieldGenerator';
 import MathSumRenderer from './../actions/renderMathSum'
 import { PlayfieldView } from './../components/PlayfieldView'
-import { Sumfield } from './../components/Sumfield';
+import { DataDisplay } from './../components/DataDisplay';
 
 describe('playfield interactions', () => {
     const generator = new PlayfieldGenerator();
@@ -13,17 +13,17 @@ describe('playfield interactions', () => {
     const matrix = generator.restart();
     const renderer = new MathSumRenderer({matrix: matrix});
     const startValue = renderer.update();
-    let wrapper;
-
+    let wrapper, wrapper2;
+    let countdown = 59;
     describe('it can create the app components', () => {
 
-        wrapper = mount(<PlayfieldView matrix={matrix}>
-            <Sumfield value={startValue}></Sumfield>
-        </PlayfieldView>)
+        wrapper = mount(<PlayfieldView matrix={matrix}></PlayfieldView>)
+        
+        wrapper2 = mount(<DataDisplay displayValue={startValue} countdown={countdown}></DataDisplay>)
 
-        it('has a task created', () => {
+         it('has a task created', () => {
             expect(parseInt(
-                wrapper.find('.current-task').text())
+                wrapper2.find('.current-task').text())
             ).toBe(startValue);
         });
 

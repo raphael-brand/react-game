@@ -52,11 +52,8 @@ export class PlayfieldView extends Component {
     render() {
         return (
             <div className="view-container">
-                <div className="game">
-                    <div className="playfield-container wrap">
-                        {this.renderPlayfield(this.props.matrix)}
-                    </div>
-                {this.props.children}
+                <div className="playfield-container wrap">
+                    {this.renderPlayfield(this.props.matrix)}
                 </div>
             </div>
         );
