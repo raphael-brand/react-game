@@ -2,10 +2,18 @@ var gulp = require('gulp')
 var sass = require('gulp-sass');
 
 gulp.task('sass', function () {
-  return gulp.src([
+    const autoprefixer = require('autoprefixer')
+    const sourcemaps = require('gulp-sourcemaps')
+    const postcss = require('gulp-postcss')
+
+    return gulp.src([
     './src/app/sass/*.sass'])
     .pipe(sass()).on('error', sass.logError)
+    .pipe(sourcemaps.init())
+    .pipe(postcss([ autoprefixer() ]))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('./public/'))
+
 });
 
 gulp.task('watch', gulp.series(function() {    
