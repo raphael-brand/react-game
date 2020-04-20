@@ -1,0 +1,29 @@
+.message-container
+    display: grid
+    background-color: #fff
+    justify-items: center
+    align-items: center
+    position: absolute
+    left: calc( 50% - 25vw )
+    width: 50vw
+    height: 40vh
+    top: 50%
+    opacity: 0
+    transition: all 500ms
+
+    .message.game-over
+        background-color: #fff
+        grid-template-columns: 1fr
+        grid-auto-rows: 1fr
+        grid-auto-columns: 1fr
+
+    &.animate-in
+        top: calc( 30% - 20vh )
+        opacity: 1
+
+.modal-overlay
+    width: 100vw
+    height: 100vh
+    position: absolute
+    top: 0
+    left: 0

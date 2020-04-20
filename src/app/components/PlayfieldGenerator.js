@@ -14,7 +14,7 @@ function PlayfieldGenerator () {
     let arr = [];
 
     this.init = function() {
-        setSize(6);
+        setSize(7);
         setPlayfieldMatrix = () => playfieldMatrix = generate(matrixSize);
         setPlayfieldMatrix()
         this.restart = this.restart.bind(this);

@@ -4,6 +4,7 @@ import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
 import { DataDisplay } from './components/DataDisplay'
+import Dialog from './components/Dialog';
 
 export default class App extends Component {
 
@@ -47,7 +48,9 @@ export default class App extends Component {
             playfield: playfield,
             displayValue: newVal,
             solvedCount: this.remainingTiles.length,
-            countdown: 60
+            countdown: 60,
+            doShowMessage: false,
+            msgType: 'game-over'
         };
     }
 
@@ -60,9 +63,14 @@ export default class App extends Component {
                 this.countdown();
             }
             else {
-                alert('Game over')
-                ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
-            }
+                this.setState({doShowMessage: true});
+                setTimeout(() =>  {
+                    this.setState({doShowMessage: false});
+                }, 3450)
+                setTimeout(() => {
+                    ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
+                }, 3460)
+           }
         }
             , 1000);
     }
@@ -79,8 +87,8 @@ export default class App extends Component {
         let notSolved = 0;
         this.remainingTiles.forEach((v,i,a) => {
             if(v.key == obj.key && v.value == obj.value) {
-                // console.log('ogg', `key : ${v.key} value : ${obj.value}`)
-                //console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
+// console.log('ogg', `key : ${v.key} value : ${obj.value}`)
+// console.log('ogg', `val : ${obj.value} key : ${obj.key}`)
                 if(this.remainingTiles[i].clicked == true) {
                     this.remainingTiles[i].played = true;
                     //this.remainingTiles[i].clicked = false;
@@ -119,11 +127,6 @@ export default class App extends Component {
         // if (this.remainingTiles[index].played) return;
         if (this.state.value < number && this.remainingTiles[index].clicked == false) return;
 
-        /* console.log(
-            'remainingTiles amount: ', this.generator.simple().filter(this.isNotSolved).length,
-            'sum: ', this.state.value
-        )*/
-
         if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
             this.remainingTiles[index].clicked = false;
@@ -148,7 +151,6 @@ export default class App extends Component {
                 element.classList.add('played')  
             })
 
-            //this.generator.getFieldByIndex(id)
             setSolvedKeys.forEach(this.setSolved);
 
 
@@ -169,7 +171,7 @@ export default class App extends Component {
 
     }
     componentDidMount() {
-        // console.log('... it worked so far. Sneaking onto the stage now.')
+// console.log('... it worked so far. Sneaking onto the stage now.')
     }
 
     componentDidUpdate() {
@@ -195,7 +197,7 @@ export default class App extends Component {
                 </PlayfieldView>
                 <DataDisplay displayValue={displayValue} countdown={countdown}>
                 </DataDisplay>
-                <i id="message"></i>
+                <Dialog message={'Game Over'} visibleTime={3000} type={this.state.msgType} doShowMessage={this.state.doShowMessage} /> 
             </Fragment>
         );
     }

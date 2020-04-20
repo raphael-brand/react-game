@@ -1,6 +1,6 @@
 var gulp = require('gulp')
 var sass = require('gulp-sass');
-
+var concatCSS = require('gulp-concat-css');
 gulp.task('sass', function () {
     const autoprefixer = require('autoprefixer')
     const sourcemaps = require('gulp-sourcemaps')
@@ -9,6 +9,7 @@ gulp.task('sass', function () {
     return gulp.src([
     './src/app/sass/*.sass'])
     .pipe(sass()).on('error', sass.logError)
+    .pipe(concatCSS('main.css'))
     .pipe(sourcemaps.init())
     .pipe(postcss([ autoprefixer() ]))
     .pipe(sourcemaps.write('.'))

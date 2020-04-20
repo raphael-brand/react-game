@@ -31,6 +31,7 @@
     "axios": "^0.19.2",
     "babel-loader": "^8.0.6",
     "gulp": "^4.0.2",
+    "gulp-concat-css": "^3.1.0",
     "gulp-postcss": "^8.0.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
