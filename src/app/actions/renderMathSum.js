@@ -50,7 +50,7 @@ function MathSumRenderer(props) {
         else
             sortedFlatArray = matrix;
         
-        // console.log(matrix);
+// console.log(matrix);
         
         let lastIndex = sortedFlatArray.length-1;
 
@@ -81,7 +81,7 @@ function MathSumRenderer(props) {
 
         }
         
-        console.log('random values', randomKeys);
+        // console.log('random values', randomKeys);
         
         randomKeys.forEach((key) => {
             let num = 0;
@@ -104,14 +104,7 @@ function MathSumRenderer(props) {
         if(result > 0)
             return parseInt(result);
         else {
-            alert('You won!')
-            setTimeout(() => {
-                ReactDOM.render(
-                    <App />,
-                    document.querySelector('#app')
-                )
-            }, 20);
-            ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
+            props.dialog()
         }
     }
     /* calculates the threshold in relation of matrix size and remaining count 

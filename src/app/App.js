@@ -20,6 +20,7 @@ export default class App extends Component {
 
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
+        this.showDialog = this.showDialog.bind(this);
         
     }
 
@@ -41,7 +42,7 @@ export default class App extends Component {
         
         this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         playfield.push(this.remainingTiles.length);
-        this.renderer = new MathSumRenderer({ matrix: playfield, restart: this.initDefaults});
+        this.renderer = new MathSumRenderer({ matrix: playfield, dialog: () => this.showDialog()});
         let newVal = this.renderer.init();
         this.state = {
             value: newVal,
@@ -49,9 +50,21 @@ export default class App extends Component {
             displayValue: newVal,
             solvedCount: this.remainingTiles.length,
             countdown: 60,
-            doShowMessage: false,
+            gameOver: false,
+            youWon: false,
             msgType: 'game-over'
         };
+    }
+
+    showDialog() {
+        this.setState({msgType: 'you-won', youWon: true});
+        setTimeout(() =>  {
+            this.setState({youWon: false});
+        }, 3450)
+        setTimeout(() => {
+            ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
+        }, 3460)
+
     }
 
     countdown() {
@@ -63,9 +76,9 @@ export default class App extends Component {
                 this.countdown();
             }
             else {
-                this.setState({doShowMessage: true});
+                this.setState({gameOver: true});
                 setTimeout(() =>  {
-                    this.setState({doShowMessage: false});
+                    this.setState({gameOver: false});
                 }, 3450)
                 setTimeout(() => {
                     ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
@@ -114,17 +127,8 @@ export default class App extends Component {
     }
 
     updateTask(number, index, obj) {
-
-        // console.log('key:', index, 'number:', number)
-        // console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
-        // console.log(this.remainingTiles)
         this.solvedCount = this.remainingTiles.filter(this.isNotClicked).length;
         this.setState({solvedCount: this.solvedCount});
-        console.log(`solvedCount: ${this.state.solvedCount}`);
-        console.log('key:', index, 'number:', number)
-        console.log('played %s, clicked %s', this.remainingTiles[index].played, this.remainingTiles[index].clicked)
-        console.log(this.remainingTiles)
-        // if (this.remainingTiles[index].played) return;
         if (this.state.value < number && this.remainingTiles[index].clicked == false) return;
 
         if (this.remainingTiles[index].clicked) {
@@ -189,7 +193,7 @@ export default class App extends Component {
     }
 
     render() {
-        let {playfield, displayValue, countdown} = this.state;
+        let {playfield, displayValue, countdown, msgType, gameOver, youWon} = this.state;
 
         return (
             <Fragment>
@@ -197,7 +201,8 @@ export default class App extends Component {
                 </PlayfieldView>
                 <DataDisplay displayValue={displayValue} countdown={countdown}>
                 </DataDisplay>
-                <Dialog message={'Game Over'} visibleTime={3000} type={this.state.msgType} doShowMessage={this.state.doShowMessage} /> 
+                <Dialog message={'Game Over'} visibleTime={3000} type={msgType} doShowMessage={gameOver} /> 
+                <Dialog message={'You won!'} visibleTime={3000} type={msgType} doShowMessage={youWon} /> 
             </Fragment>
         );
     }
