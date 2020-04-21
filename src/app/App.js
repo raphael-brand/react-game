@@ -203,8 +203,8 @@ export default class App extends Component {
                 </DataDisplay>
                 <PlayfieldView onClick={this.updateTask} matrix={playfield}>
                 </PlayfieldView>
-                {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
                 {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
+                {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
             </Fragment>
         );
     }
