@@ -17,7 +17,7 @@ export class PlayfieldView extends Component {
         return (e) => {
             if (e.target.classList.toString().indexOf('played') > -1) return;
             this.props.onClick(number, index, e.target);
-            //console.log('key:', index, 'number:', number)
+// console.log('key:', index, 'number:', number)
         }
     }
 
@@ -27,7 +27,7 @@ export class PlayfieldView extends Component {
         const playfield = [];
         let i = 0;
         matrix.forEach((fields, index, array) => {
-            // console.log(value);
+// console.log(value);
             let numberRow = [];
             fields.forEach((number_value) => {
                 // if playfield size shall be 50vw 
@@ -38,7 +38,7 @@ export class PlayfieldView extends Component {
                     filter: colors.baseFilter + ' ' + colors.colors[colors.numberColors[number_value - 1]]
                 }
                 const field =
-                    <div key={i} data-testid={i} style={style} className="playfield-button f image" onClick={this.clickHandler(i, number_value)}></div>
+                    <button aria-pressed="false" aria-hidden="false" key={i} data-testid={i} style={style} className="playfield-button f image" onClick={this.clickHandler(i, number_value)}></button>
 
                 numberRow.push(field);
                 i++;

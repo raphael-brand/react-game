@@ -57,8 +57,6 @@ export default class App extends Component {
     }
 
     showDialog() {
-
-        clearTimeout(this.timeout);
         this.setState({msgType: 'you-won', youWon: true});
         setTimeout(() =>  {
             this.setState({youWon: false});
@@ -79,13 +77,7 @@ export default class App extends Component {
             }
             else {
                 this.setState({gameOver: true});
-                setTimeout(() =>  {
-                    this.setState({gameOver: false});
-                }, 3450)
-                setTimeout(() => {
-                    ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
-                }, 3460)
-           }
+          }
         }
             , 1000);
     }
@@ -108,6 +100,7 @@ export default class App extends Component {
                     this.remainingTiles[i].played = true;
                     //this.remainingTiles[i].clicked = false;
                     document.querySelectorAll('.f.image')[obj.key].classList.add('played');
+                    document.querySelectorAll('.f.image')[obj.key].setAttribute('aria-hidden', true);
                 }
             }
             else notSolved++;
@@ -136,25 +129,26 @@ export default class App extends Component {
         if (this.remainingTiles[index].clicked) {
             this.setState({ value: this.state.value + number });
             this.remainingTiles[index].clicked = false;
-             obj.classList.remove('clicked');
+            obj.setAttribute('aria-pressed', false);
+            obj.classList.remove('clicked');
         }
         else
         if (this.state.value - number > 0) {
             this.setState({ value: this.state.value - number });
             this.remainingTiles[index].clicked = true;
-             obj.classList.add('clicked');
+            obj.setAttribute('aria-pressed', true);
+            obj.classList.add('clicked');
             
         } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
             this.setState({ value: this.state.value - number });
-            
-             obj.classList.add('clicked');
+            obj.setAttribute('aria-pressed', true);
+            obj.classList.add('clicked');
             this.remainingTiles[index].clicked = true;
             const clickedList = document.querySelectorAll('.clicked');
             let setSolvedKeys = [];
             clickedList.forEach((element) => {
                 const id = element.getAttribute('data-testid')
                 setSolvedKeys.push({"key": id, "value": this.generator.getFieldByIndex(id)[0].value });
-                element.classList.add('played')  
             })
 
             setSolvedKeys.forEach(this.setSolved);
@@ -194,17 +188,22 @@ export default class App extends Component {
         }
     }
 
+    closeDialog() {
+        this.setState({gameOver: false})
+        ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
+    }
+
     render() {
         let {playfield, displayValue, countdown, msgType, gameOver, youWon} = this.state;
 
         return (
             <Fragment>
-                <PlayfieldView onClick={this.updateTask} matrix={playfield}>
-                </PlayfieldView>
                 <DataDisplay displayValue={displayValue} countdown={countdown}>
                 </DataDisplay>
-                <Dialog message={'Game Over'} visibleTime={3000} type={msgType} doShowMessage={gameOver} /> 
-                <Dialog message={'You won!'} visibleTime={3000} type={msgType} doShowMessage={youWon} /> 
+                <PlayfieldView onClick={this.updateTask} matrix={playfield}>
+                </PlayfieldView>
+                {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
+                {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
             </Fragment>
         );
     }

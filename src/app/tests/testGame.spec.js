@@ -41,7 +41,7 @@ describe('playfield interactions', () => {
                     wrapper.find('div[testid="'+matchIDs[0].key+'"]')
                     .simulate('click');
                 else if(matchIDs.length == 0) {
-                    console.info('no exact match found')
+                    // console.info('no exact match found')
                 }
             });
             

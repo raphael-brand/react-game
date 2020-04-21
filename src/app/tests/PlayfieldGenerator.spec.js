@@ -14,7 +14,7 @@ describe('Matrix generator', () => {
     });
     it('can call restart', () => {
         let game = generator.restart();
-        // console.log(game);
+// console.log(game);
     });
 });
 

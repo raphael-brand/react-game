@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import './setupTests';
-
 import PlayfieldGenerator from './../components/PlayfieldGenerator';
 import MathSumRenderer from './../actions/renderMathSum'
 
@@ -19,11 +18,11 @@ describe('math sum field generate', () => {
     describe('math sum renderer', () => {
 
         it('calls the init function', () => {
-            console.log(renderer.init());
+            // console.log(renderer.init());
         });
         
         it('calls the update function', () => {
-            console.log(renderer.update());
+            // console.log(renderer.update());
         });
 
     });
@@ -31,19 +30,19 @@ describe('math sum field generate', () => {
     describe('when playfield tile is to be tested', () => {
 
         it('creates a sorted number list', () => {
-            console.log(generator.restart())
+            // console.log(generator.restart())
             generator.simple();
         })
     
         it('filters the numbers list by desired value', ()=> {
             let filtered = generator.simpleByValue(generator.simple()[0].value);
             filtered.forEach(element => {
-                console.log(`key: ${element.key}`, `value: ${element.value}`);
+                // console.log(`key: ${element.key}`, `value: ${element.value}`);
             });
         });
 
         it('returns a value from the simple map', () => {
-            console.log(generator.getFieldByIndex(2));
+            // console.log(generator.getFieldByIndex(2));
         })
 
     });    
