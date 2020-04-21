@@ -57,6 +57,7 @@ export default class App extends Component {
     }
 
     showDialog() {
+        clearTimeout(this.timeout);
         this.setState({msgType: 'you-won', youWon: true});
         setTimeout(() =>  {
             this.setState({youWon: false});
