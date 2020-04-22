@@ -190,6 +190,7 @@ export default class App extends Component {
     }
 
     closeDialog() {
+        if(!this.state.gameOver) return;
         this.setState({gameOver: false})
         ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
     }
