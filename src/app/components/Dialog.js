@@ -25,7 +25,7 @@ function Dialog (props) {
                     </div>
                     {autoclose == 0 && <a href="#" role="button" aria-label="close" className={'close-button '+ (!props.autoclose ? isVisible : '')}>x</a>}
                 </div>
-                <div onClick={() => {toggleDialog('display-none'); showInitially = false; props.onClose()}} className="modal-overlay"></div>
+                <div onClick={() => { setTimeout( () => { props.onClose() }, 1000)}} className="modal-overlay"></div>
             </>
         );
     }
