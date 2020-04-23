@@ -12,7 +12,7 @@ describe('playfield interactions', () => {
     generator.init();
     const matrix = generator.restart();
     const renderer = new MathSumRenderer({matrix: matrix});
-    const startValue = renderer.update();
+    const startValue = renderer.init();
     let wrapper, wrapper2;
     let countdown = 59;
     describe('it can create the app components', () => {
