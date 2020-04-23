@@ -20,8 +20,9 @@
   "bugs": {
     "url": "https://github.com/raphael-brand/react-webpack-babel/issues"
   },
-  "homepage": "https://github.com/raphael-brand/react-webpack-babel#readme",
-  "changes": "https://github.com/raphael-brand/react-webpack-babel/compare/e0df52a106febb5753ceaf46b95e8df0157e7d87..master",
+  "homepage": "https://github.com/raphael-brand/react-game#readme",
+  "changes": "https://github.com/raphael-brand/react-game/compare/adf71451201d6aec21a89fbf9181a69278192b85..master",
+  "wiki": "https://github.com/raphael-brand/react-game/wiki/1-Minute-Math-Test",
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
