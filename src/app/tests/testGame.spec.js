@@ -19,7 +19,7 @@ describe('playfield interactions', () => {
 
         wrapper = mount(<PlayfieldView matrix={matrix}></PlayfieldView>)
         
-        wrapper2 = mount(<DataDisplay displayValue={startValue} countdown={countdown}></DataDisplay>)
+        wrapper2 = mount(<DataDisplay displayValue={startValue} countdown={countdown} onCountdownFinish={() => console.log('countdown finished')}></DataDisplay>)
 
          it('has a task created', () => {
             expect(parseInt(

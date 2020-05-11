@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Countdown from './Countdown';
 export class DataDisplay extends Component {
 
     constructor(props) {
         super(props);
-
     }
+
+
     render() {
         return (
         <div className="data-display-container">
             <div className="current-task">{ this.props.displayValue }</div>
-            <div id="countdown">{this.props.countdown}</div>
+            <Countdown startValue={this.props.countdown} onComplete={this.props.onCountdownFinish} />
         </div>
         );
     }
@@ -18,5 +20,6 @@ export class DataDisplay extends Component {
 
 DataDisplay.propTypes = {
     displayValue: PropTypes.number.isRequired,
-    countdown: PropTypes.number.isRequired
+    countdown: PropTypes.number.isRequired,
+    onCountdownFinish: PropTypes.func.isRequired
 }

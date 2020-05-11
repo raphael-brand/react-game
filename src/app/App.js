@@ -5,6 +5,7 @@ import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
 import { DataDisplay } from './components/DataDisplay'
 import Dialog from './components/Dialog';
+import Countdown from './components/Countdown';
 
 export default class App extends Component {
 
@@ -16,8 +17,7 @@ export default class App extends Component {
         
         console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
         
-        this.countdown();
-
+        this.onCountdownFinish = this.onCountdownFinish.bind(this);
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.showDialog = this.showDialog.bind(this);
@@ -52,7 +52,7 @@ export default class App extends Component {
             countdown: 60,
             gameOver: false,
             youWon: false,
-            msgType: 'game-over'
+            msgType: 'startup'
         };
     }
 
@@ -68,19 +68,8 @@ export default class App extends Component {
 
     }
 
-    countdown() {
-
-        this.timeout = setTimeout(() => {
-            if (this.state.countdown > 1) {
-                this.setState({ countdown: this.state.countdown - 1});
-                console.log('counting ...')
-                this.countdown();
-            }
-            else {
-                this.setState({gameOver: true});
-          }
-        }
-            , 1000);
+    onCountdownFinish() {
+        this.setState({gameOver: true});
     }
 
     isNotSolved(field) {
@@ -123,25 +112,28 @@ export default class App extends Component {
     }
 
     updateTask(number, index, obj) {
+
+        let { value } = this.state;
+
         this.solvedCount = this.remainingTiles.filter(this.isNotClicked).length;
         this.setState({solvedCount: this.solvedCount});
-        if (this.state.value < number && this.remainingTiles[index].clicked == false) return;
+        if (value < number && this.remainingTiles[index].clicked == false) return;
 
         if (this.remainingTiles[index].clicked) {
-            this.setState({ value: this.state.value + number });
+            this.setState({ value: value + number });
             this.remainingTiles[index].clicked = false;
             obj.setAttribute('aria-pressed', false);
             obj.classList.remove('clicked');
         }
         else
-        if (this.state.value - number > 0) {
-            this.setState({ value: this.state.value - number });
+        if (value - number > 0) {
+            this.setState({ value: value - number });
             this.remainingTiles[index].clicked = true;
             obj.setAttribute('aria-pressed', true);
             obj.classList.add('clicked');
             
-        } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
-            this.setState({ value: this.state.value - number });
+        } else if (value - number === 0 && this.remainingTiles.length > 1) {
+            this.setState({ value: value - number });
             obj.setAttribute('aria-pressed', true);
             obj.classList.add('clicked');
             this.remainingTiles[index].clicked = true;
@@ -198,15 +190,22 @@ export default class App extends Component {
     render() {
         let {playfield, displayValue, countdown, msgType, gameOver, youWon} = this.state;
 
-        return (
-            <Fragment>
-                <DataDisplay displayValue={displayValue} countdown={countdown}>
-                </DataDisplay>
-                <PlayfieldView onClick={this.updateTask} matrix={playfield}>
-                </PlayfieldView>
-                {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
-                {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
-            </Fragment>
-        );
+        if(msgType == 'startup')
+            return (
+                <Dialog autoclose={3500} message={'Game start in:'} type={msgType}>
+                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over'})}></Countdown>
+                </Dialog>
+            )
+        else
+            return (
+                <Fragment>
+                    <DataDisplay displayValue={displayValue} countdown={countdown} onCountdownFinish={this.onCountdownFinish}>
+                    </DataDisplay>
+                    <PlayfieldView onClick={this.updateTask} matrix={playfield}>
+                    </PlayfieldView>
+                    {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
+                    {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
+                </Fragment>
+            );
     }
 }

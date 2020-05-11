@@ -22,6 +22,7 @@ function Dialog (props) {
                 <div className={'message-container ' + isVisible} aria-hidden="false">
                     <div className={`message ${props.type}`} role="alert" aria-live="assertive">
                         {props.message}
+                        {props.children}
                     </div>
                     {autoclose == 0 && <a href="#" role="button" aria-label="close" className={'close-button '+ (!props.autoclose ? isVisible : '')}>x</a>}
                 </div>
