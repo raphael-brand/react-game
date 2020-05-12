@@ -182,6 +182,7 @@ export default class App extends Component {
     }
 
     closeDialog() {
+        clearTimeout(this.timeout)
         if(!this.state.gameOver) return;
         this.setState({gameOver: false})
         ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
@@ -192,8 +193,8 @@ export default class App extends Component {
 
         if(msgType == 'startup')
             return (
-                <Dialog autoclose={3500} message={'Game start in:'} type={msgType}>
-                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over'})}></Countdown>
+                <Dialog message={'Game is starting in:'} type={msgType}>
+                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over', gameOver: false, youWon: false})}></Countdown>
                 </Dialog>
             )
         else
@@ -204,7 +205,7 @@ export default class App extends Component {
                     <PlayfieldView onClick={this.updateTask} matrix={playfield}>
                     </PlayfieldView>
                     {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
-                    {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
+                    {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} onComplete={this.closeDialog} />}
                 </Fragment>
             );
     }
