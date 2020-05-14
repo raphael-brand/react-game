@@ -19,14 +19,21 @@ function Dialog (props) {
         
         return (
             <>
-                <div className={'message-container ' + isVisible} aria-hidden="false">
+                <div className="modal-overlay"></div>
+                <div onClick={(e) => {
+                    if(props.type != 'game-over') return
+                    setTimeout(() => {
+                        document.querySelector('.message-container').classList.add('waiting');
+                        setTimeout( () => { props.onClose() }, 1000);
+                    }, 500)
+
+                }} className={'message-container ' + isVisible} aria-hidden="false">
                     <div className={`message ${props.type}`} role="alert" aria-live="assertive">
                         {props.message}
                         {props.children}
                     </div>
                     {autoclose == 0 && <a href="#" role="button" aria-label="close" className={'close-button '+ (!props.autoclose ? isVisible : '')}>x</a>}
                 </div>
-                <div onClick={() => { setTimeout( () => { props.onClose() }, 1000)}} className="modal-overlay"></div>
             </>
         );
     }
