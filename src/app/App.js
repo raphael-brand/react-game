@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
-import { DataDisplay } from './components/DataDisplay'
+import DataDisplay from './components/DataDisplay'
 import Dialog from './components/Dialog';
 import Countdown from './components/Countdown';
 
@@ -165,6 +165,7 @@ export default class App extends Component {
     }
     componentDidMount() {
 // console.log('... it worked so far. Sneaking onto the stage now.')
+        
     }
 
     componentDidUpdate() {
