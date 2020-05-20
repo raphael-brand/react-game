@@ -19,7 +19,7 @@ function Dialog (props) {
         
         return (
             <>
-                <div className="modal-overlay"></div>
+                <div className={`modal-overlay ${props.type}`}></div>
                 <div onClick={(e) => {
                     if(props.type != 'game-over') return
                     setTimeout(() => {
@@ -27,7 +27,7 @@ function Dialog (props) {
                         setTimeout( () => { props.onClose() }, 1000);
                     }, 500)
 
-                }} className={'message-container ' + isVisible} aria-hidden="false">
+                }} className={`message-container ${isVisible} ${props.type}`} aria-hidden="false">
                     <div className={`message ${props.type}`} role="alert" aria-live="assertive">
                         {props.message}
                         {props.children}

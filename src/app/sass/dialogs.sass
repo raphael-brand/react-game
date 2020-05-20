@@ -1,6 +1,7 @@
 .message-container
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-    font-size: 3rem
+    font-size: 2rem
+    text-align: center
     display: grid
     border-radius: 1rem
     background-color: #fff
@@ -54,6 +55,17 @@
     .close-button.animate-in
         display: block
 
+.message-container.main-menu
+    overflow: none
+    align-items: baseline
+    left: calc( 50% - 35vw)
+    width: 70vw
+
+    &.animate-in
+        top: 10%
+        height: 80vw
+        transition: height 120ms
+
 .modal-overlay
     width: 100vw
     height: 100vh
@@ -61,3 +73,9 @@
     top: 0
     left: 0
     cursor: default
+    background-color: #000
+    opacity: 0
+
+    &.main-menu
+        transition: all 1.5s
+        opacity: .8

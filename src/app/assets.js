@@ -10,24 +10,27 @@ const numberColors = ['blue', 'brown', 'green', 'orange', 'blue', 'orange', 'gre
 let loadImage;
 let HandlerFunction;
 const addGearSymbol = e => {
-    e.preventDefault()
+    e.preventDefault();
+    loadImage = false;
     document.querySelector('#setup').classList.add('animate-in')
     e.target.removeEventListener('click', addGearSymbol);
     e.target.addEventListener('click', HandlerFunction);
 }
 const gearSymbol = (onActiveHandler) => {
+    if(!!document.querySelector('#setup img')) return;
     const container = document.querySelector('#setup')
-    console.log(container)
-    loadImage = new Image(47,47);
-
-    loadImage.addEventListener('click', addGearSymbol);
-    HandlerFunction = onActiveHandler;
+    if(loadImage !== false) {
+        loadImage = new Image(47,47);
     
-    loadImage.src = 'gear_2699.png';
-    setTimeout(() => {
-        document.querySelector('#setup').appendChild(loadImage);
-        loadImage.click()
-        }, 0)
+        loadImage.addEventListener('click', addGearSymbol);
+        HandlerFunction = onActiveHandler;
+        
+        loadImage.src = 'gear_2699.png';
+        setTimeout(() => {
+            document.querySelector('#setup').appendChild(loadImage);
+            loadImage.click()
+            }, 0)
+    }
 }
 
 
