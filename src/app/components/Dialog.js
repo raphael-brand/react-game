@@ -32,7 +32,10 @@ function Dialog (props) {
                         {props.message}
                         {props.children}
                     </div>
-                    {autoclose == 0 && <a href="#" role="button" aria-label="close" className={'close-button '+ (!props.autoclose ? isVisible : '')}>x</a>}
+                    {autoclose == 0 && <a href="#" role="button" aria-label="close"
+                    className={'close-button '+ (!props.autoclose ? isVisible : '')}
+                    onClick={props.onClose ? props.onClose : () => false}
+                    >x</a>}
                 </div>
             </>
         );

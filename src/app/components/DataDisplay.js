@@ -1,25 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Countdown from './Countdown';
-export class DataDisplay extends Component {
+import {gearSymbol} from '../assets';
 
-    constructor(props) {
-        super(props);
-    }
+const DataDisplay = (props) => {
 
+    
 
-    render() {
-        return (
-        <div className="data-display-container">
-            <div className="current-task">{ this.props.displayValue }</div>
-            <Countdown startValue={this.props.countdown} onComplete={this.props.onCountdownFinish} />
-        </div>
-        );
-    }
+    return (
+    <div className="data-display-container">
+        <div className="current-task">{ props.displayValue }</div>
+        <Countdown startValue={props.countdown} onComplete={props.onCountdownFinish} gameIsPaused={props.gameIsPaused}/>
+        <div id="setup">{gearSymbol(props.openMainMenu)}</div>
+    </div>
+    );
 }
 
 DataDisplay.propTypes = {
     displayValue: PropTypes.number.isRequired,
     countdown: PropTypes.number.isRequired,
-    onCountdownFinish: PropTypes.func.isRequired
+    onCountdownFinish: PropTypes.func.isRequired,
+    openMainMenu: PropTypes.func,
+    gameIsPaused: PropTypes.func
 }
+
+export default DataDisplay;

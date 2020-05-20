@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
-import { DataDisplay } from './components/DataDisplay'
+import DataDisplay from './components/DataDisplay'
 import Dialog from './components/Dialog';
 import Countdown from './components/Countdown';
 
@@ -21,6 +21,8 @@ export default class App extends Component {
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
         this.showDialog = this.showDialog.bind(this);
+        this.openMainMenu = this.openMainMenu.bind(this);
+        this.gameIsPaused = this.gameIsPaused.bind(this);
         
     }
 
@@ -52,7 +54,9 @@ export default class App extends Component {
             countdown: 60,
             gameOver: false,
             youWon: false,
-            msgType: 'startup'
+            msgType: 'startup',
+            showMenu: false,
+            isPaused: true
         };
     }
 
@@ -66,6 +70,23 @@ export default class App extends Component {
             ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
         }, 3460)
 
+    }
+
+    openMainMenu() {
+        clearTimeout(this.timeout);
+        if(this.state.isPaused) {
+            this.closeMainMenu();
+            return;
+        }
+        this.setState({msgType: 'main-menu', showMenu: true, isPaused: true});
+    }
+
+    closeMainMenu() {
+        this.setState({msgType: 'game-over', showMenu: false, isPaused: false});
+    }
+
+    gameIsPaused() {
+        return this.state.isPaused;
     }
 
     onCountdownFinish() {
@@ -165,6 +186,7 @@ export default class App extends Component {
     }
     componentDidMount() {
 // console.log('... it worked so far. Sneaking onto the stage now.')
+        
     }
 
     componentDidUpdate() {
@@ -189,23 +211,29 @@ export default class App extends Component {
     }
 
     render() {
-        let {playfield, displayValue, countdown, msgType, gameOver, youWon} = this.state;
+        let {playfield, displayValue, countdown, msgType, gameOver, youWon, showMenu } = this.state;
 
         if(msgType == 'startup')
             return (
-                <Dialog message={'Game is starting in:'} type={msgType}>
-                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over', gameOver: false, youWon: false})}></Countdown>
+                <Dialog message={'Game is starting in'} type={msgType}>
+                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over', gameOver: false, youWon: false, isPaused: false})}></Countdown>
                 </Dialog>
             )
         else
             return (
                 <Fragment>
-                    <DataDisplay displayValue={displayValue} countdown={countdown} onCountdownFinish={this.onCountdownFinish}>
+                    <DataDisplay
+                    displayValue={displayValue}
+                    countdown={countdown}
+                    onCountdownFinish={this.onCountdownFinish}
+                    openMainMenu={this.openMainMenu}
+                    gameIsPaused={this.gameIsPaused}>
                     </DataDisplay>
                     <PlayfieldView onClick={this.updateTask} matrix={playfield}>
                     </PlayfieldView>
                     {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
                     {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} onComplete={this.closeDialog} />}
+                    {showMenu && <Dialog onClose={() => this.closeMainMenu()} message={'Main Menu'} type={msgType} />}
                 </Fragment>
             );
     }

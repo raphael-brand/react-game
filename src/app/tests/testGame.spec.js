@@ -5,7 +5,7 @@ import './setupTests';
 import PlayfieldGenerator from './../components/PlayfieldGenerator';
 import MathSumRenderer from './../actions/renderMathSum'
 import { PlayfieldView } from './../components/PlayfieldView'
-import { DataDisplay } from './../components/DataDisplay';
+import DataDisplay from './../components/DataDisplay';
 
 describe('playfield interactions', () => {
     const generator = new PlayfieldGenerator();

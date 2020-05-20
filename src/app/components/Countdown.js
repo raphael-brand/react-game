@@ -6,7 +6,6 @@ const Countdown = props => {
 
     let [countdown, setCountdown] = new useState(props.startValue);
     let timeout = 0;
-    
     let stop = () => {
         console.log('calling stop ...')
         if(props.onComplete) {
@@ -18,6 +17,7 @@ const Countdown = props => {
     let tick = () => {
 //        if(timeout > 0) clearTimeout(timeout);
         timeout = setTimeout(() => {
+            if(props.gameIsPaused && props.gameIsPaused()) return tick();
             if (countdown > 1) {
                 setCountdown(countdown - 1);
                 tick();
@@ -46,7 +46,8 @@ const Countdown = props => {
 
 Countdown.propTypes = {
     startValue: PropTypes.number,
-    onComplete: PropTypes.func
+    onComplete: PropTypes.func,
+    gameIsPaused: PropTypes.func
 }
 
 export default Countdown;

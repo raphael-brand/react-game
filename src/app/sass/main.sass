@@ -76,7 +76,19 @@ pre
 
 .data-display-container
     display: grid
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 2fr 1fr 1fr
 
     > div
         grid-auto-columns: 1fr
+#setup
+    opacity: 0
+    transition: opacity 30ms
+    display: grid
+    grid-column: none
+
+    &.animate-in
+        opacity: 1
+        width: 47px
+        height: 47px
+        padding: 3px
+        cursor: pointer
