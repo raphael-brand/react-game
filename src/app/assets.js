@@ -7,31 +7,4 @@ const colors = {
 }
 const numberColors = ['blue', 'brown', 'green', 'orange', 'blue', 'orange', 'green', 'brown', 'blue']
 
-let loadImage;
-let HandlerFunction;
-const addGearSymbol = e => {
-    e.preventDefault();
-    loadImage = false;
-    document.querySelector('#setup').classList.add('animate-in')
-    e.target.removeEventListener('click', addGearSymbol);
-    e.target.addEventListener('click', HandlerFunction);
-}
-const gearSymbol = (onActiveHandler) => {
-    if(!!document.querySelector('#setup img')) return;
-    const container = document.querySelector('#setup')
-    if(loadImage !== false) {
-        loadImage = new Image(47,47);
-    
-        loadImage.addEventListener('click', addGearSymbol);
-        HandlerFunction = onActiveHandler;
-        
-        loadImage.src = 'gear_2699.png';
-        setTimeout(() => {
-            document.querySelector('#setup').appendChild(loadImage);
-            loadImage.click()
-            }, 0)
-    }
-}
-
-
-module.exports = {style: {baseFilter, colors, numberColors}, gearSymbol};
+module.exports = {style: {baseFilter, colors, numberColors}};
