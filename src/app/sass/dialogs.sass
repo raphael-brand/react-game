@@ -56,10 +56,49 @@
         display: block
 
 .message-container.main-menu
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: 1fr 3fr 1fr
+    grid-template-areas: "dialog-title dialog-content dialog-footer"
     overflow: none
-    align-items: baseline
+    justify-items: stretch
     left: calc( 50% - 35vw)
     width: 70vw
+    cursor: default
+
+    .dialog-title, .dialog-content
+        grid-column-start: 1
+
+    .dialog-title
+        grid-row-start: 1
+
+    .dialog-content
+        display: grid
+        grid-template-columns: 1fr 5fr 1fr
+        align-self: normal
+
+        .button-row
+            grid-column-start: 2
+            border-radius: 1em
+            box-shadow: 0 0.5em 1em 0.1em rgba(127,0,0,.2)
+            border-width: 0px
+            cursor: pointer
+
+            button
+                cursor: pointer
+                border: none
+                background-color: transparent
+                width: 100%
+                height: 100%
+                font-size: 60%
+                color: rgba(0, 0, 0, 0.7)
+                text-shadow: 2px 0px 10px rgba(0,100,100, 1)
+
+        .button-row:nth-child(1)
+            margin-bottom: .5em
+
+        .button-row:nth-child(2)
+            margin-bottom: 1em
 
     &.animate-in
         top: 10%

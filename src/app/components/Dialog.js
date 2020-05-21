@@ -21,6 +21,7 @@ function Dialog (props) {
             <>
                 <div className={`modal-overlay ${props.type}`}></div>
                 <div onClick={(e) => {
+                    e.preventDefault();
                     if(props.type != 'game-over') return
                     setTimeout(() => {
                         document.querySelector('.message-container').classList.add('waiting');
@@ -29,9 +30,10 @@ function Dialog (props) {
 
                 }} className={`message-container ${isVisible} ${props.type}`} aria-hidden="false">
                     <div className={`message ${props.type}`} role="alert" aria-live="assertive">
-                        {props.message}
-                        {props.children}
+                        <div className="dialog-title">{props.message}</div> 
                     </div>
+                    <div className="dialog-content">{props.children}</div>
+                    
                     {autoclose == 0 && <a href="#" role="button" aria-label="close"
                     className={'close-button '+ (!props.autoclose ? isVisible : '')}
                     onClick={props.onClose ? props.onClose : () => false}

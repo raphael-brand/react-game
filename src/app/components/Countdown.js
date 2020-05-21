@@ -15,7 +15,6 @@ const Countdown = props => {
     }
 
     let tick = () => {
-//        if(timeout > 0) clearTimeout(timeout);
         timeout = setTimeout(() => {
             if(props.gameIsPaused && props.gameIsPaused()) return tick();
             if (countdown > 1) {

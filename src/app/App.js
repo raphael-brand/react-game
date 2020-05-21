@@ -6,6 +6,9 @@ import { PlayfieldView } from './components/PlayfieldView'
 import DataDisplay from './components/DataDisplay'
 import Dialog from './components/Dialog';
 import Countdown from './components/Countdown';
+import Button from './components/Button';
+import actions from './actions/ButtonActions';
+
 
 export default class App extends Component {
 
@@ -20,7 +23,7 @@ export default class App extends Component {
         this.onCountdownFinish = this.onCountdownFinish.bind(this);
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
-        this.showDialog = this.showDialog.bind(this);
+        this.showDialog = this.winnerModal.bind(this);
         this.openMainMenu = this.openMainMenu.bind(this);
         this.gameIsPaused = this.gameIsPaused.bind(this);
         
@@ -29,11 +32,6 @@ export default class App extends Component {
 
     initDefaults() {
 
-        if(this.timeout > 0) {
-            clearTimeout(this.timeout);
-        }
-
-        this.timeout = 0;
         this.countRenderUpdates = 0;
         this.solvedCount = 0;
         this.state = {value: 0, displayValue: 0};
@@ -44,7 +42,7 @@ export default class App extends Component {
         
         this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         playfield.push(this.remainingTiles.length);
-        this.renderer = new MathSumRenderer({ matrix: playfield, dialog: () => this.showDialog()});
+        this.renderer = new MathSumRenderer({ matrix: playfield, dialog: () => this.winnerModal()});
         let newVal = this.renderer.init();
         this.state = {
             value: newVal,
@@ -60,9 +58,8 @@ export default class App extends Component {
         };
     }
 
-    showDialog() {
-        clearTimeout(this.timeout);
-        this.setState({msgType: 'you-won', youWon: true});
+    winnerModal() {
+        this.setState({msgType: 'you-won', youWon: true, isPaused: true});
         setTimeout(() =>  {
             this.setState({youWon: false});
         }, 3450)
@@ -73,7 +70,6 @@ export default class App extends Component {
     }
 
     openMainMenu() {
-        clearTimeout(this.timeout);
         if(this.state.isPaused) {
             this.closeMainMenu();
             return;
@@ -174,8 +170,6 @@ export default class App extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timeout);
-        this.timeout = 0;
         setTimeout(() => {
             ReactDOM.render(
                 <App />,
@@ -204,8 +198,7 @@ export default class App extends Component {
     }
 
     closeDialog() {
-        clearTimeout(this.timeout)
-        if(!this.state.gameOver) return;
+        //if(!this.state.gameOver) return;
         this.setState({gameOver: false})
         ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
     }
@@ -233,7 +226,18 @@ export default class App extends Component {
                     </PlayfieldView>
                     {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
                     {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} onComplete={this.closeDialog} />}
-                    {showMenu && <Dialog onClose={() => this.closeMainMenu()} message={'Main Menu'} type={msgType} />}
+                    {showMenu && 
+                    <Dialog
+                        onClose={() => this.closeMainMenu()}
+                        message={'1 Minute Math Test'}
+                        type={msgType}
+                    >
+                    <Button ariaLabel="how to play" action={actions.showHowto} btnText="How to play" />
+                    <Button ariaLabel="restart game" action={() => this.closeDialog()} btnText="Restart game" />
+                    <Button ariaLabel="easy mode" action={actions.mode('easy')} btnText="Easy" />
+                    <Button ariaLabel="medium mode" action={actions.mode('medium')} btnText="Medium" />
+                    <Button ariaLabel="hard mode" action={actions.mode('hard')} btnText="Hard" />
+                    </Dialog>}
                 </Fragment>
             );
     }
