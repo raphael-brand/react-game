@@ -84,11 +84,14 @@ pre
     opacity: 0
     transition: opacity 30ms
     display: grid
-    grid-column: none
+    grid-auto-columns: 1fr
+    position: relative
+    right: 0
 
-    &.animate-in
+    &.animate-in, > div, > img
         opacity: 1
-        width: 47px
-        height: 47px
+        width: 41px
+        height: 41px
         padding: 3px
         cursor: pointer
+        position: absolute
