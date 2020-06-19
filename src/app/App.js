@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 import MathSumRenderer from './actions/renderMathSum'
 import PlayfieldGenerator from './components/PlayfieldGenerator';
 import { PlayfieldView } from './components/PlayfieldView'
-import { DataDisplay } from './components/DataDisplay'
+import DataDisplay from './components/DataDisplay'
 import Dialog from './components/Dialog';
+import Countdown from './components/Countdown';
+import Button from './components/Button';
+import actions from './actions/ButtonActions';
+
 
 export default class App extends Component {
 
@@ -16,22 +20,18 @@ export default class App extends Component {
         
         console.log(`this.state.solvedCount: ${this.state.solvedCount}`)
         
-        this.countdown();
-
+        this.onCountdownFinish = this.onCountdownFinish.bind(this);
         this.setSolved = this.setSolved.bind(this);
         this.updateTask = this.updateTask.bind(this);
-        this.showDialog = this.showDialog.bind(this);
+        this.showDialog = this.winnerModal.bind(this);
+        this.openMainMenu = this.openMainMenu.bind(this);
+        this.gameIsPaused = this.gameIsPaused.bind(this);
         
     }
 
 
     initDefaults() {
 
-        if(this.timeout > 0) {
-            clearTimeout(this.timeout);
-        }
-
-        this.timeout = 0;
         this.countRenderUpdates = 0;
         this.solvedCount = 0;
         this.state = {value: 0, displayValue: 0};
@@ -42,7 +42,7 @@ export default class App extends Component {
         
         this.remainingTiles = this.generator.simple().filter(this.isNotSolved);
         playfield.push(this.remainingTiles.length);
-        this.renderer = new MathSumRenderer({ matrix: playfield, dialog: () => this.showDialog()});
+        this.renderer = new MathSumRenderer({ matrix: playfield, dialog: () => this.winnerModal()});
         let newVal = this.renderer.init();
         this.state = {
             value: newVal,
@@ -52,13 +52,14 @@ export default class App extends Component {
             countdown: 60,
             gameOver: false,
             youWon: false,
-            msgType: 'game-over'
+            msgType: 'startup',
+            showMenu: false,
+            isPaused: true
         };
     }
 
-    showDialog() {
-        clearTimeout(this.timeout);
-        this.setState({msgType: 'you-won', youWon: true});
+    winnerModal() {
+        this.setState({msgType: 'you-won', youWon: true, isPaused: true});
         setTimeout(() =>  {
             this.setState({youWon: false});
         }, 3450)
@@ -68,19 +69,24 @@ export default class App extends Component {
 
     }
 
-    countdown() {
-
-        this.timeout = setTimeout(() => {
-            if (this.state.countdown > 1) {
-                this.setState({ countdown: this.state.countdown - 1});
-                console.log('counting ...')
-                this.countdown();
-            }
-            else {
-                this.setState({gameOver: true});
-          }
+    openMainMenu() {
+        if(this.state.isPaused) {
+            this.closeMainMenu();
+            return;
         }
-            , 1000);
+        this.setState({msgType: 'main-menu', showMenu: true, isPaused: true});
+    }
+
+    closeMainMenu() {
+        this.setState({msgType: 'game-over', showMenu: false, isPaused: false});
+    }
+
+    gameIsPaused() {
+        return this.state.isPaused;
+    }
+
+    onCountdownFinish() {
+        this.setState({gameOver: true});
     }
 
     isNotSolved(field) {
@@ -123,25 +129,28 @@ export default class App extends Component {
     }
 
     updateTask(number, index, obj) {
+
+        let { value } = this.state;
+
         this.solvedCount = this.remainingTiles.filter(this.isNotClicked).length;
         this.setState({solvedCount: this.solvedCount});
-        if (this.state.value < number && this.remainingTiles[index].clicked == false) return;
+        if (value < number && this.remainingTiles[index].clicked == false) return;
 
         if (this.remainingTiles[index].clicked) {
-            this.setState({ value: this.state.value + number });
+            this.setState({ value: value + number });
             this.remainingTiles[index].clicked = false;
             obj.setAttribute('aria-pressed', false);
             obj.classList.remove('clicked');
         }
         else
-        if (this.state.value - number > 0) {
-            this.setState({ value: this.state.value - number });
+        if (value - number > 0) {
+            this.setState({ value: value - number });
             this.remainingTiles[index].clicked = true;
             obj.setAttribute('aria-pressed', true);
             obj.classList.add('clicked');
             
-        } else if (this.state.value - number === 0 && this.remainingTiles.length > 1) {
-            this.setState({ value: this.state.value - number });
+        } else if (value - number === 0 && this.remainingTiles.length > 1) {
+            this.setState({ value: value - number });
             obj.setAttribute('aria-pressed', true);
             obj.classList.add('clicked');
             this.remainingTiles[index].clicked = true;
@@ -161,8 +170,6 @@ export default class App extends Component {
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timeout);
-        this.timeout = 0;
         setTimeout(() => {
             ReactDOM.render(
                 <App />,
@@ -173,6 +180,7 @@ export default class App extends Component {
     }
     componentDidMount() {
 // console.log('... it worked so far. Sneaking onto the stage now.')
+        
     }
 
     componentDidUpdate() {
@@ -190,23 +198,46 @@ export default class App extends Component {
     }
 
     closeDialog() {
-        if(!this.state.gameOver) return;
         this.setState({gameOver: false})
         ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
     }
 
     render() {
-        let {playfield, displayValue, countdown, msgType, gameOver, youWon} = this.state;
+        let {playfield, displayValue, countdown, msgType, gameOver, youWon, showMenu } = this.state;
 
-        return (
-            <Fragment>
-                <DataDisplay displayValue={displayValue} countdown={countdown}>
-                </DataDisplay>
-                <PlayfieldView onClick={this.updateTask} matrix={playfield}>
-                </PlayfieldView>
-                {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
-                {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} />}
-            </Fragment>
-        );
+        if(msgType == 'startup')
+            return (
+                <Dialog message={'Game is starting in'} type={msgType}>
+                    <Countdown startValue={3} onComplete={() => this.setState({msgType: 'game-over', gameOver: false, youWon: false, isPaused: false})}></Countdown>
+                </Dialog>
+            )
+        else
+            return (
+                <Fragment>
+                    <DataDisplay
+                    displayValue={displayValue}
+                    countdown={countdown}
+                    onCountdownFinish={this.onCountdownFinish}
+                    openMainMenu={this.openMainMenu}
+                    gameIsPaused={this.gameIsPaused}>
+                    </DataDisplay>
+                    <PlayfieldView onClick={this.updateTask} matrix={playfield}>
+                    </PlayfieldView>
+                    {gameOver && <Dialog onClose={() => this.closeDialog()} message={'Game Over'} type={msgType} />}
+                    {youWon && <Dialog autoclose={3000} message={'You won!'} type={msgType} onComplete={this.closeDialog} />}
+                    {showMenu && 
+                    <Dialog
+                        onClose={() => this.closeMainMenu()}
+                        message={'1 Minute Math Test'}
+                        type={msgType}
+                    >
+                    <Button ariaLabel="how to play" action={actions.showHowto} btnText="How to play" />
+                    <Button ariaLabel="restart game" action={() => this.closeDialog()} btnText="Restart game" />
+                    <Button ariaLabel="easy mode" action={actions.mode('easy')} btnText="Easy" />
+                    <Button ariaLabel="medium mode" action={actions.mode('medium')} btnText="Medium" />
+                    <Button ariaLabel="hard mode" action={actions.mode('hard')} btnText="Hard" />
+                    </Dialog>}
+                </Fragment>
+            );
     }
 }

@@ -19,13 +19,26 @@ function Dialog (props) {
         
         return (
             <>
-                <div className={'message-container ' + isVisible} aria-hidden="false">
+                <div className={`modal-overlay ${props.type}`}></div>
+                <div onClick={(e) => {
+                    e.preventDefault();
+                    if(props.type != 'game-over') return
+                    setTimeout(() => {
+                        document.querySelector('.message-container').classList.add('waiting');
+                        setTimeout( () => { props.onClose() }, 1000);
+                    }, 500)
+
+                }} className={`message-container ${isVisible} ${props.type}`} aria-hidden="false">
                     <div className={`message ${props.type}`} role="alert" aria-live="assertive">
-                        {props.message}
+                        <div className="dialog-title">{props.message}</div> 
                     </div>
-                    {autoclose == 0 && <a href="#" role="button" aria-label="close" className={'close-button '+ (!props.autoclose ? isVisible : '')}>x</a>}
+                    <div className="dialog-content">{props.children}</div>
+                    
+                    {autoclose == 0 && <a href="#" role="button" aria-label="close"
+                    className={'close-button '+ (!props.autoclose ? isVisible : '')}
+                    onClick={props.onClose ? props.onClose : () => false}
+                    >x</a>}
                 </div>
-                <div onClick={() => { setTimeout( () => { props.onClose() }, 1000)}} className="modal-overlay"></div>
             </>
         );
     }

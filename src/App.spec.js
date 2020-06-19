@@ -1,9 +1,0 @@
-describe('My Test Suite', () => {
-    it('My Test Case', () => {
-        expect(true).toBe(true);
-    });
-
-    it('Counter is there', () => {
-        
-    })
-});

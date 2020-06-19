@@ -17,7 +17,6 @@ function MathSumRenderer(props) {
         return createTask();
     }
 
-    this.init();
 
     this.update = (updatedFlatMap) => {
         if(updatedFlatMap) {
