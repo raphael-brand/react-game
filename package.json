@@ -44,7 +44,8 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "url-regex-safe": "^1.0.2"
   },
   "peerDependencies": {
     "serialize-javascript": "^3.1.0"
