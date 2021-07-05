@@ -1,5 +1,5 @@
 var gulp = require('gulp')
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var concatCSS = require('gulp-concat-css');
 gulp.task('sass', function () {
     const autoprefixer = require('autoprefixer')

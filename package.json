@@ -27,25 +27,27 @@
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.8.3",
-    "autoprefixer": "^9.7.6",
+    "autoprefixer": "^10.2.6",
     "babel-loader": "^8.0.6",
     "gulp": "^4.0.2",
     "gulp-concat-css": "^3.1.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "jest": "^26.0.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "gulp-postcss": "^9.0.0",
+    "gulp-sass": "^5.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "jest": "^27.0.6",
+    "postcss": "^8.3.5",
+    "sass": "^1.35.1",
+    "webpack": "^5.41.1",
+    "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "prop-types": "^15.7.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "url-regex-safe": "^1.0.2"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "url-regex-safe": "^2.0.2"
   },
   "peerDependencies": {
     "serialize-javascript": "^3.1.0"
